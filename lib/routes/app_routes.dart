@@ -5,7 +5,6 @@ import '../presentation/home_container_screen/home_container_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart'; // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class AppRoutes {
   static const String loginScreen = '/login_screen';
 

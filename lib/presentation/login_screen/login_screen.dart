@@ -4,7 +4,6 @@ import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_outlined_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key})
       : super(
@@ -94,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                   right: 43.h,
                 ),
               ),
-              SizedBox(height: 59.v),
+              SizedBox(height: 41.v),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
