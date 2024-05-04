@@ -1,4 +1,4 @@
-package com.application.app
+package com.application.nft_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 
