@@ -13,7 +13,7 @@ class HomeItemWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerRight,
         child: CustomImageView(
-          imagePath: ImageConstant.imgRectangle12,
+          imagePath: ImageConstant.imgRectangle9,
           height: 149.v,
           width: 150.h,
           radius: BorderRadius.circular(

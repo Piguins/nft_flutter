@@ -34,7 +34,7 @@ class WalletPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 34.h),
                   child: Text(
                     "Wallet Account",
-                    style: theme.textTheme.bodyMedium,
+                    style: CustomTextStyles.bodyMediumPrimary,
                   ),
                 ),
               ),
@@ -185,7 +185,7 @@ class WalletPage extends StatelessWidget {
   /// Section Widget
   Widget _buildWalletBalancesStack(BuildContext context) {
     return SizedBox(
-      height: 157.v,
+      height: 188.v,
       width: 349.h,
       child: Stack(
         alignment: Alignment.center,

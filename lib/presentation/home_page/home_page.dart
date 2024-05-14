@@ -19,40 +19,42 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          width: double.maxFinite,
-          decoration: AppDecoration.fillOnPrimary,
-          child: Column(
-            children: [
-              SizedBox(height: 4.v),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 39.h,
-                  right: 43.h,
-                ),
-                child: CustomSearchView(
-                  controller: searchController,
-                  hintText: "Search items",
-                ),
-              ),
-              SizedBox(height: 40.v),
-              _buildRowpopular(context),
-              SizedBox(height: 40.v),
-              _buildStackfatbrides(context),
-              SizedBox(height: 26.v),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 54.h),
-                  child: Text(
-                    "Explore",
-                    style: theme.textTheme.headlineSmall,
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.maxFinite,
+            decoration: AppDecoration.fillOnPrimary,
+            child: Column(
+              children: [
+                SizedBox(height: 25.v),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 39.h,
+                    right: 43.h,
+                  ),
+                  child: CustomSearchView(
+                    controller: searchController,
+                    hintText: "Search items",
                   ),
                 ),
-              ),
-              SizedBox(height: 20.v),
-              _buildHome(context)
-            ],
+                SizedBox(height: 40.v),
+                _buildRowpopular(context),
+                SizedBox(height: 40.v),
+                _buildStackfatbrides(context),
+                SizedBox(height: 26.v),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 54.h),
+                    child: Text(
+                      "Explore",
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.v),
+                _buildHome(context)
+              ],
+            ),
           ),
         ),
       ),
@@ -61,44 +63,25 @@ class HomePage extends StatelessWidget {
 
   /// Section Widget
   Widget _buildRowpopular(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: EdgeInsets.only(left: 42.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CustomElevatedButton(
-              height: 45.v,
-              width: 140.h,
-              text: "Popular",
-              buttonStyle: CustomButtonStyles.fillPrimaryTL22,
-              buttonTextStyle: CustomTextStyles.titleMediumBlack900,
-            ),
-            CustomOutlinedButton(
-              width: 140.h,
-              text: "Trending",
-              margin: EdgeInsets.only(left: 19.h),
-              buttonStyle: CustomButtonStyles.outlineGray,
-              buttonTextStyle: theme.textTheme.titleMedium!,
-            ),
-            Container(
-              width: 140.h,
-              margin: EdgeInsets.only(left: 19.h),
-              padding: EdgeInsets.symmetric(
-                horizontal: 30.h,
-                vertical: 8.v,
-              ),
-              decoration: AppDecoration.outlineGray.copyWith(
-                borderRadius: BorderRadiusStyle.roundedBorder22,
-              ),
-              child: Text(
-                "Arts",
-                style: theme.textTheme.titleMedium,
-              ),
-            )
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 42.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomElevatedButton(
+            height: 45.v,
+            width: 140.h,
+            text: "Popular",
+            buttonStyle: CustomButtonStyles.fillPrimaryTL22,
+            buttonTextStyle: CustomTextStyles.titleMediumBlack900,
+          ),
+          CustomOutlinedButton(
+            width: 140.h,
+            text: "Trending",
+            buttonStyle: CustomButtonStyles.outlineGray,
+            buttonTextStyle: theme.textTheme.titleMedium!,
+          )
+        ],
       ),
     );
   }

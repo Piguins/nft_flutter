@@ -21,7 +21,7 @@ class CustomTextStyles {
         color: appTheme.gray600,
       );
   static get bodyMediumPrimary => theme.textTheme.bodyMedium!.copyWith(
-        color: theme.colorScheme.primary,
+        color: Colors.white,
       );
 
 // Title text style
