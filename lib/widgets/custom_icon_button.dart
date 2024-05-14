@@ -6,6 +6,10 @@ extension IconButtonStyleHelper on CustomIconButton {
         color: appTheme.indigo500,
         borderRadius: BorderRadius.circular(17.h),
       );
+  static BoxDecoration get fillPrimaryContainer => BoxDecoration(
+        color: theme.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(16.h),
+      );
   static BoxDecoration get fillBlueGray => BoxDecoration(
         color: appTheme.blueGray90002,
         borderRadius: BorderRadius.circular(16.h),
@@ -25,6 +29,7 @@ class CustomIconButton extends StatelessWidget {
       : super(
           key: key,
         );
+
   final Alignment? alignment;
   final double? height;
   final double? width;
@@ -32,6 +37,7 @@ class CustomIconButton extends StatelessWidget {
   final BoxDecoration? decoration;
   final Widget? child;
   final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null

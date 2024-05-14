@@ -23,6 +23,7 @@ class ImageConstant {
 // Trade images
   static String imgRectangle9280x348 = '$imagePath/img_rectangle_9_280x348.png';
 // Common images
+  static String imgRectangle18 = '$imagePath/img_rectangle_18.png';
   static String imgDiamond1 = '$imagePath/img_diamond_1.svg';
   static String imgReceiveMoneySvgrepoCom =
       '$imagePath/img_receive_money_svgrepo_com.svg';

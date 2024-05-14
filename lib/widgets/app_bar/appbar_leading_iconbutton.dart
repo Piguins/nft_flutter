@@ -24,7 +24,7 @@ class AppbarLeadingIconbutton extends StatelessWidget {
         child: CustomIconButton(
           height: 32.adaptSize,
           width: 32.adaptSize,
-          decoration: IconButtonStyleHelper.fillBlueGray,
+          decoration: IconButtonStyleHelper.fillPrimaryContainer,
           child: CustomImageView(
             imagePath: ImageConstant.imgArrowLeft,
           ),

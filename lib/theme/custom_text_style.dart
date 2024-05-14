@@ -23,6 +23,7 @@ class CustomTextStyles {
   static get bodyMediumPrimary => theme.textTheme.bodyMedium!.copyWith(
         color: theme.colorScheme.primary,
       );
+
 // Title text style
   static get titleLargeBlack900 => theme.textTheme.titleLarge!.copyWith(
         color: appTheme.black900,
@@ -50,6 +51,9 @@ class CustomTextStyles {
       );
   static get titleSmallPrimary => theme.textTheme.titleSmall!.copyWith(
         color: theme.colorScheme.primary,
+      );
+  static get titleSmallPrimaryContainer => theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.primaryContainer,
       );
   static get titleSmallSemiBold => theme.textTheme.titleSmall!.copyWith(
         fontWeight: FontWeight.w600,

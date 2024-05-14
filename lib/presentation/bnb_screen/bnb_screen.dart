@@ -15,7 +15,7 @@ class BnbScreen extends StatelessWidget {
           width: double.maxFinite,
           child: Column(
             children: [
-              _buildColumnarrowleft(context),
+              _buildWalletActionsColumn(context),
               Spacer(
                 flex: 31,
               ),
@@ -40,7 +40,7 @@ class BnbScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildColumnarrowleft(BuildContext context) {
+  Widget _buildWalletActionsColumn(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 35.h,
@@ -51,66 +51,85 @@ class BnbScreen extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 28.v),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 101.v),
-                child: CustomIconButton(
-                  height: 32.adaptSize,
-                  width: 32.adaptSize,
-                  padding: EdgeInsets.all(7.h),
-                  decoration: IconButtonStyleHelper.fillBlueGray,
-                  onTap: () {
-                    onTapBtnArrowleftone(context);
-                  },
-                  child: CustomImageView(
-                    imagePath: ImageConstant.imgArrowLeft,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.v),
+                  child: CustomIconButton(
+                    height: 32.adaptSize,
+                    width: 32.adaptSize,
+                    padding: EdgeInsets.all(7.h),
+                    decoration: IconButtonStyleHelper.fillBlueGray,
+                    onTap: () {
+                      onTapBtnArrowleftone(context);
+                    },
+                    child: CustomImageView(
+                      imagePath: ImageConstant.imgArrowLeft,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 132.h,
-                  top: 11.v,
-                ),
-                child: Column(
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 141.h,
+                    top: 11.v,
+                  ),
+                  child: Text(
+                    "BNB",
+                    style: CustomTextStyles.bodyMedium15,
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 21.v),
+          CustomImageView(
+            imagePath: ImageConstant.imgBinanceCoinBnb,
+            height: 25.v,
+            width: 32.h,
+          ),
+          SizedBox(height: 26.v),
+          Text(
+            "0 BNB",
+            selectionColor: Colors.white,
+          ),
+          SizedBox(height: 40.v),
+          Padding(
+            padding: EdgeInsets.only(
+              left: 21.h,
+              right: 26.h,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
-                    Text(
-                      "BNB",
-                      style: CustomTextStyles.bodyMedium15,
+                    CustomIconButton(
+                      height: 35.adaptSize,
+                      width: 35.adaptSize,
+                      padding: EdgeInsets.all(4.h),
+                      decoration: IconButtonStyleHelper.fillIndigo,
+                      child: CustomImageView(
+                        imagePath: ImageConstant.imgReceiveMoneySvgrepoCom,
+                      ),
                     ),
-                    SizedBox(height: 21.v),
-                    CustomImageView(
-                      imagePath: ImageConstant.imgBinanceCoinBnb,
-                      height: 25.v,
-                      width: 32.h,
-                    ),
-                    SizedBox(height: 26.v),
+                    SizedBox(height: 9.v),
                     Text(
-                      "0 BNB",
-                      style: theme.textTheme.bodyLarge,
+                      "Receive",
+                      style: theme.textTheme.bodyMedium,
                     )
                   ],
                 ),
-              )
-            ],
-          ),
-          SizedBox(height: 40.v),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 21.h,
-                right: 26.h,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
+                Spacer(
+                  flex: 53,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.v),
+                  child: Column(
                     children: [
                       CustomIconButton(
                         height: 35.adaptSize,
@@ -118,61 +137,39 @@ class BnbScreen extends StatelessWidget {
                         padding: EdgeInsets.all(4.h),
                         decoration: IconButtonStyleHelper.fillIndigo,
                         child: CustomImageView(
-                          imagePath: ImageConstant.imgReceiveMoneySvgrepoCom,
+                          imagePath: ImageConstant.imgMoneySendSvgrepoCom,
                         ),
                       ),
-                      SizedBox(height: 9.v),
+                      SizedBox(height: 8.v),
                       Text(
-                        "Receive",
+                        "Transfer",
                         style: theme.textTheme.bodyMedium,
                       )
                     ],
                   ),
-                  Spacer(
-                    flex: 53,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 2.v),
-                    child: Column(
-                      children: [
-                        CustomIconButton(
-                          height: 35.adaptSize,
-                          width: 35.adaptSize,
-                          padding: EdgeInsets.all(4.h),
-                          child: CustomImageView(
-                            imagePath: ImageConstant.imgMoneySendSvgrepoCom,
-                          ),
-                        ),
-                        SizedBox(height: 8.v),
-                        Text(
-                          "Transfer",
-                          style: theme.textTheme.bodyMedium,
-                        )
-                      ],
+                ),
+                Spacer(
+                  flex: 46,
+                ),
+                Column(
+                  children: [
+                    CustomIconButton(
+                      height: 35.adaptSize,
+                      width: 35.adaptSize,
+                      padding: EdgeInsets.all(4.h),
+                      decoration: IconButtonStyleHelper.fillIndigo,
+                      child: CustomImageView(
+                        imagePath: ImageConstant.imgTransfer3SvgrepoCom,
+                      ),
                     ),
-                  ),
-                  Spacer(
-                    flex: 46,
-                  ),
-                  Column(
-                    children: [
-                      CustomIconButton(
-                        height: 35.adaptSize,
-                        width: 35.adaptSize,
-                        padding: EdgeInsets.all(4.h),
-                        child: CustomImageView(
-                          imagePath: ImageConstant.imgTransfer3SvgrepoCom,
-                        ),
-                      ),
-                      SizedBox(height: 11.v),
-                      Text(
-                        "Swap",
-                        style: theme.textTheme.bodyMedium,
-                      )
-                    ],
-                  )
-                ],
-              ),
+                    SizedBox(height: 11.v),
+                    Text(
+                      "Swap",
+                      style: theme.textTheme.bodyMedium,
+                    )
+                  ],
+                )
+              ],
             ),
           )
         ],
