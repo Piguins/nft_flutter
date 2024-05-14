@@ -97,6 +97,7 @@ class WalletPage extends StatelessWidget {
               ),
             ),
             hintText: "ETH",
+            contentPadding: EdgeInsets.only(left: 25.0),
             items: dropdownItemList,
           ),
           SizedBox(height: 28.v),
@@ -106,7 +107,7 @@ class WalletPage extends StatelessWidget {
           ),
           SizedBox(height: 24.v),
           CustomElevatedButton(
-            height: 31.v,
+            height: 45.v,
             width: 171.h,
             text: "13GUaKH...Mr8mM4i",
             buttonStyle: CustomButtonStyles.fillBlueGray,

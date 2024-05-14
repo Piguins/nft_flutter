@@ -75,7 +75,7 @@ class BnbScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: 141.h,
+                    left: 145.h,
                     top: 11.v,
                   ),
                   child: Text(
@@ -91,11 +91,16 @@ class BnbScreen extends StatelessWidget {
             imagePath: ImageConstant.imgBinanceCoinBnb,
             height: 25.v,
             width: 32.h,
+            margin: EdgeInsets.only(left: 15.0),
           ),
           SizedBox(height: 26.v),
-          Text(
-            "0 BNB",
-            style: CustomTextStyles.bodyMediumPrimary,
+          Padding(
+            padding: EdgeInsets.only(left: 20.0),
+            child: Text(
+              "0 BNB",
+              style: CustomTextStyles.bodyMediumPrimary,
+              textAlign: TextAlign.right,
+            ),
           ),
           SizedBox(height: 40.v),
           Padding(
