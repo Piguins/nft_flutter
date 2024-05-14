@@ -127,6 +127,7 @@ class EthScreen extends StatelessWidget {
                         height: 35.adaptSize,
                         width: 35.adaptSize,
                         padding: EdgeInsets.all(4.h),
+                        decoration: IconButtonStyleHelper.fillIndigo,
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
                         ),
@@ -148,6 +149,7 @@ class EthScreen extends StatelessWidget {
                       height: 35.adaptSize,
                       width: 35.adaptSize,
                       padding: EdgeInsets.all(4.h),
+                      decoration: IconButtonStyleHelper.fillIndigo,
                       child: CustomImageView(
                         imagePath: ImageConstant.imgTransfer3SvgrepoCom,
                       ),
