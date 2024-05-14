@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
-import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
-import '../../widgets/app_bar/appbar_title.dart';
-import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_icon_button.dart';
 
 class EthScreen extends StatelessWidget {
@@ -18,30 +15,22 @@ class EthScreen extends StatelessWidget {
           width: double.maxFinite,
           child: Column(
             children: [
-              _buildColumnarrowleft(context),
-              Container(
-                padding: EdgeInsets.only(
-                  left: 122.h,
-                  top: 164.v,
-                  right: 122.h,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CustomImageView(
-                      imagePath: ImageConstant.imgBoxSvgrepoCom,
-                      height: 50.adaptSize,
-                      width: 50.adaptSize,
-                      margin: EdgeInsets.only(right: 63.h),
-                    ),
-                    SizedBox(height: 28.v),
-                    Text(
-                      "No transaction record",
-                      style: CustomTextStyles.titleSmallBluegray90002,
-                    ),
-                    SizedBox(height: 5.v)
-                  ],
-                ),
+              _buildWalletActionsColumn(context),
+              Spacer(
+                flex: 31,
+              ),
+              CustomImageView(
+                imagePath: ImageConstant.imgBoxSvgrepoCom,
+                height: 50.adaptSize,
+                width: 50.adaptSize,
+              ),
+              SizedBox(height: 28.v),
+              Text(
+                "No transaction record",
+                style: CustomTextStyles.titleSmallBluegray90002,
+              ),
+              Spacer(
+                flex: 68,
               )
             ],
           ),
@@ -51,9 +40,12 @@ class EthScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildColumnarrowleft(BuildContext context) {
+  Widget _buildWalletActionsColumn(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.v),
+      padding: EdgeInsets.symmetric(
+        horizontal: 35.h,
+        vertical: 16.v,
+      ),
       decoration: AppDecoration.gradientOnPrimaryToPrimaryContainer.copyWith(
         borderRadius: BorderRadiusStyle.customBorderBL30,
       ),
@@ -61,39 +53,55 @@ class EthScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 28.v),
-          CustomAppBar(
-            leadingWidth: 67.h,
-            leading: AppbarLeadingIconbutton(
-              imagePath: ImageConstant.imgArrowLeft,
-              margin: EdgeInsets.only(
-                left: 35.h,
-                bottom: 2.v,
-              ),
-              onTap: () {
-                onTapArrowleftone(context);
-              },
-            ),
-            centerTitle: true,
-            title: AppbarTitle(
-              text: "ETH",
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.v),
+                  child: CustomIconButton(
+                    height: 32.adaptSize,
+                    width: 32.adaptSize,
+                    padding: EdgeInsets.all(7.h),
+                    decoration: IconButtonStyleHelper.fillBlueGray,
+                    onTap: () {
+                      onTapBtnArrowleftone(context);
+                    },
+                    child: CustomImageView(
+                      imagePath: ImageConstant.imgArrowLeft,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 141.h,
+                    top: 11.v,
+                  ),
+                  child: Text(
+                    "ETH",
+                    style: CustomTextStyles.bodyMediumPrimary,
+                  ),
+                )
+              ],
             ),
           ),
           SizedBox(height: 21.v),
           CustomImageView(
             imagePath: ImageConstant.imgEthereumSvgrepoCom,
-            height: 32.v,
-            width: 30.h,
+            height: 25.v,
+            width: 32.h,
           ),
-          SizedBox(height: 19.v),
+          SizedBox(height: 26.v),
           Text(
             "0 ETH",
-            style: theme.textTheme.bodyLarge,
+            style: CustomTextStyles.bodyMediumPrimary,
           ),
           SizedBox(height: 40.v),
           Padding(
             padding: EdgeInsets.only(
-              left: 56.h,
-              right: 61.h,
+              left: 21.h,
+              right: 26.h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +178,7 @@ class EthScreen extends StatelessWidget {
   }
 
   /// Navigates back to the previous screen.
-  onTapArrowleftone(BuildContext context) {
+  onTapBtnArrowleftone(BuildContext context) {
     Navigator.pop(context);
   }
 }

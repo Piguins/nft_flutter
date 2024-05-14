@@ -1,3 +1,5 @@
+import 'package:application/presentation/bnb_screen/bnb_screen.dart';
+import 'package:application/presentation/eth_screen/eth_screen.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -207,25 +209,41 @@ class WalletPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 18.h),
-                    child: _buildWalletEthBalanceRow(
-                      context,
-                      image: ImageConstant.imgBinanceCoinBnb,
-                      text: "BNB",
-                      text1: "0",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BnbScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 18.h),
+                      child: _buildWalletEthBalanceRow(
+                        context,
+                        image: ImageConstant.imgBinanceCoinBnb,
+                        text: "BNB",
+                        text1: "0",
+                      ),
                     ),
                   ),
                   SizedBox(height: 60.v),
-                  Padding(
-                    padding: EdgeInsets.only(right: 18.h),
-                    child: _buildWalletEthBalanceRow(
-                      context,
-                      image: ImageConstant.imgEthereumSvgrepoCom,
-                      text: "ETH",
-                      text1: "0",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EthScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 18.h),
+                      child: _buildWalletEthBalanceRow(
+                        context,
+                        image: ImageConstant.imgEthereumSvgrepoCom,
+                        text: "ETH",
+                        text1: "0",
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

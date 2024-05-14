@@ -80,7 +80,7 @@ class BnbScreen extends StatelessWidget {
                   ),
                   child: Text(
                     "BNB",
-                    style: CustomTextStyles.bodyMedium15,
+                    style: CustomTextStyles.bodyMediumPrimary,
                   ),
                 )
               ],
@@ -95,7 +95,7 @@ class BnbScreen extends StatelessWidget {
           SizedBox(height: 26.v),
           Text(
             "0 BNB",
-            selectionColor: Colors.white,
+            style: CustomTextStyles.bodyMediumPrimary,
           ),
           SizedBox(height: 40.v),
           Padding(
