@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/bnb_screen/bnb_screen.dart';
-// import '../presentation/eth_screen/eth_screen.dart';
+import '../presentation/eth_screen/eth_screen.dart';
 import '../presentation/home_container_screen/home_container_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart';
@@ -26,7 +26,7 @@ class AppRoutes {
     onBoardingScreen: (context) => OnBoardingScreen(),
     homeContainerScreen: (context) => HomeContainerScreen(),
     bnbScreen: (context) => BnbScreen(),
-    // ethScreen: (context) => EthScreen(),
+    ethScreen: (context) => EthScreen(),
     // tradeScreen: (context) => TradeScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),
     initialRoute: (context) => LoginScreen()
