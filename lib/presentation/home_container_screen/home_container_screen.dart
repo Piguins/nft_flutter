@@ -1,3 +1,4 @@
+import 'package:application/presentation/wallet_page/wallet_page.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_bottom_bar.dart';
@@ -47,7 +48,7 @@ class HomeContainerScreen extends StatelessWidget {
       case BottomBarEnum.Favourite:
         return "/";
       case BottomBarEnum.Wallet:
-        return "/";
+        return AppRoutes.walletPage;
       case BottomBarEnum.Account:
         return "/";
       default:
@@ -60,6 +61,8 @@ class HomeContainerScreen extends StatelessWidget {
     switch (currentRoute) {
       case AppRoutes.homePage:
         return HomePage();
+      case AppRoutes.walletPage:
+        return WalletPage();
       default:
         return DefaultWidget();
     }

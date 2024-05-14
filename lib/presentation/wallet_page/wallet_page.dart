@@ -13,7 +13,10 @@ class WalletPage extends StatelessWidget {
           key: key,
         );
 
-  List<String> dropdownItemList = ["Item One", "Item Two", "Item Three"];
+  List<String> dropdownItemList = [
+    "ETH",
+    "BNB",
+  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -211,7 +214,7 @@ class WalletPage extends StatelessWidget {
                       text1: "0",
                     ),
                   ),
-                  SizedBox(height: 54.v),
+                  SizedBox(height: 60.v),
                   Padding(
                     padding: EdgeInsets.only(right: 18.h),
                     child: _buildWalletEthBalanceRow(

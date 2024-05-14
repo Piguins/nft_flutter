@@ -5,6 +5,7 @@ import '../presentation/bnb_screen/bnb_screen.dart';
 import '../presentation/eth_screen/eth_screen.dart';
 import '../presentation/home_container_screen/home_container_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
+import '../presentation/wallet_page/wallet_page.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart';
 // import '../presentation/trade_screen/trade_screen.dart';
 
@@ -27,6 +28,8 @@ class AppRoutes {
     homeContainerScreen: (context) => HomeContainerScreen(),
     bnbScreen: (context) => BnbScreen(),
     ethScreen: (context) => EthScreen(),
+    walletPage: (context) => WalletPage(),
+
     // tradeScreen: (context) => TradeScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),
     initialRoute: (context) => LoginScreen()
