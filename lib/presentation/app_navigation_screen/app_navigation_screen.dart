@@ -6,7 +6,6 @@ class AppNavigationScreen extends StatelessWidget {
       : super(
           key: key,
         );
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,6 +39,24 @@ class AppNavigationScreen extends StatelessWidget {
                           screenTitle: "Home - Container",
                           onTapScreenTitle: () => onTapScreenTitle(
                               context, AppRoutes.homeContainerScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "BNB",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.bnbScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "ETH",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.ethScreen),
+                        ),
+                        _buildScreenTitle(
+                          context,
+                          screenTitle: "Trade",
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.tradeScreen),
                         )
                       ],
                     ),

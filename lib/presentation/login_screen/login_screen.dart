@@ -93,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                   right: 43.h,
                 ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, AppRoutes.homeContainerScreen),
+                    Navigator.pushNamed(context, AppRoutes.bnbScreen),
               ),
               SizedBox(height: 41.v),
               Align(
