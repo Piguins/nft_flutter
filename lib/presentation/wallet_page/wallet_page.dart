@@ -47,7 +47,7 @@ class WalletPage extends StatelessWidget {
                   padding: EdgeInsets.only(left: 34.h),
                   child: Text(
                     "Owned NFTs",
-                    style: theme.textTheme.bodyMedium,
+                    style: CustomTextStyles.bodyMediumPrimary,
                   ),
                 ),
               ),
@@ -100,7 +100,7 @@ class WalletPage extends StatelessWidget {
           SizedBox(height: 28.v),
           Text(
             "0 ETH",
-            style: theme.textTheme.bodyMedium,
+            style: CustomTextStyles.bodyMediumPrimary,
           ),
           SizedBox(height: 24.v),
           CustomElevatedButton(
@@ -145,6 +145,7 @@ class WalletPage extends StatelessWidget {
                         height: 35.adaptSize,
                         width: 35.adaptSize,
                         padding: EdgeInsets.all(4.h),
+                        decoration: IconButtonStyleHelper.fillIndigo,
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
                         ),
@@ -163,6 +164,7 @@ class WalletPage extends StatelessWidget {
                       height: 35.adaptSize,
                       width: 35.adaptSize,
                       padding: EdgeInsets.all(4.h),
+                      decoration: IconButtonStyleHelper.fillIndigo,
                       child: CustomImageView(
                         imagePath: ImageConstant.imgTransfer3SvgrepoCom,
                       ),
