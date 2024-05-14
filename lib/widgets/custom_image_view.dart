@@ -37,27 +37,16 @@ class CustomImageView extends StatelessWidget {
 
   ///[imagePath] is required parameter for showing image
   String? imagePath;
-
   double? height;
-
   double? width;
-
   Color? color;
-
   BoxFit? fit;
-
   final String placeHolder;
-
   Alignment? alignment;
-
   VoidCallback? onTap;
-
   EdgeInsetsGeometry? margin;
-
   BorderRadius? radius;
-
   BoxBorder? border;
-
   @override
   Widget build(BuildContext context) {
     return alignment != null

@@ -2,23 +2,20 @@ import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
 enum BottomBarEnum { Home, Favourite, Wallet, Account }
-// ignore_for_file: must_be_immutable
 
+// ignore_for_file: must_be_immutable
 // ignore_for_file: must_be_immutable
 class CustomBottomBar extends StatefulWidget {
   CustomBottomBar({this.onChanged});
-
   Function(BottomBarEnum)? onChanged;
-
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
 }
-// ignore_for_file: must_be_immutable
 
+// ignore_for_file: must_be_immutable
 // ignore_for_file: must_be_immutable
 class CustomBottomBarState extends State<CustomBottomBar> {
   int selectedIndex = 0;
-
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
       icon: ImageConstant.imgNavHome,
@@ -52,7 +49,6 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Account,
     )
   ];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,14 +84,14 @@ class CustomBottomBarState extends State<CustomBottomBar> {
                   imagePath: bottomMenuList[index].icon,
                   height: 23.v,
                   width: 25.h,
-                  color: theme.colorScheme.onError,
+                  color: appTheme.gray600,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 1.v),
                   child: Text(
                     bottomMenuList[index].title ?? "",
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      color: theme.colorScheme.onError,
+                    style: CustomTextStyles.bodyMediumGray600.copyWith(
+                      color: appTheme.gray600,
                     ),
                   ),
                 )
@@ -134,8 +130,8 @@ class CustomBottomBarState extends State<CustomBottomBar> {
     );
   }
 }
-// ignore_for_file: must_be_immutable
 
+// ignore_for_file: must_be_immutable
 // ignore_for_file: must_be_immutable
 class BottomMenuModel {
   BottomMenuModel(
@@ -144,15 +140,10 @@ class BottomMenuModel {
       this.title,
       required this.type,
       this.isCircle = false});
-
   String icon;
-
   String activeIcon;
-
   String? title;
-
   BottomBarEnum type;
-
   bool isCircle;
 }
 

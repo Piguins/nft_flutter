@@ -7,7 +7,6 @@ class BnbScreen extends StatelessWidget {
       : super(
           key: key,
         );
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,6 +39,7 @@ class BnbScreen extends StatelessWidget {
     );
   }
 
+  /// Section Widget
   Widget _buildColumnarrowleft(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(

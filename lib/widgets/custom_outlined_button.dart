@@ -29,15 +29,10 @@ class CustomOutlinedButton extends BaseButton {
           width: width,
           margin: margin,
         );
-
   final BoxDecoration? decoration;
-
   final Widget? leftIcon;
-
   final Widget? rightIcon;
-
   final Widget? label;
-
   @override
   Widget build(BuildContext context) {
     return alignment != null

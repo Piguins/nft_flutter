@@ -28,47 +28,26 @@ class CustomSearchView extends StatelessWidget {
       : super(
           key: key,
         );
-
   final Alignment? alignment;
-
   final double? width;
-
   final TextEditingController? scrollPadding;
-
   final TextEditingController? controller;
-
   final FocusNode? focusNode;
-
   final bool? autofocus;
-
   final TextStyle? textStyle;
-
   final TextInputType? textInputType;
-
   final int? maxLines;
-
   final String? hintText;
-
   final TextStyle? hintStyle;
-
   final Widget? prefix;
-
   final BoxConstraints? prefixConstraints;
-
   final Widget? suffix;
-
   final BoxConstraints? suffixConstraints;
-
   final EdgeInsets? contentPadding;
-
   final InputBorder? borderDecoration;
-
   final Color? fillColor;
-
   final bool? filled;
-
   final FormFieldValidator<String>? validator;
-
   final Function(String)? onChanged;
 
   @override
@@ -145,7 +124,7 @@ class CustomSearchView extends StatelessWidget {
               right: 9.h,
               bottom: 9.v,
             ),
-        fillColor: fillColor ?? theme.colorScheme.primaryContainer,
+        fillColor: fillColor ?? appTheme.blueGray90002,
         filled: filled,
         border: borderDecoration ??
             OutlineInputBorder(

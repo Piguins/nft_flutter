@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
-import '../../widgets/app_bar/appbar_leading_image.dart';
-import '../../widgets/app_bar/appbar_title.dart';
-import '../../widgets/app_bar/custom_app_bar.dart';
+import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -10,18 +8,42 @@ class OnBoardingScreen extends StatelessWidget {
       : super(
           key: key,
         );
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: _buildAppBar(context),
-        body: SizedBox(
+        body: Container(
           width: double.maxFinite,
+          padding: EdgeInsets.symmetric(
+            horizontal: 30.h,
+            vertical: 43.v,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 2.v),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    CustomImageView(
+                      imagePath: ImageConstant.imgDiamond1,
+                      height: 25.v,
+                      width: 32.h,
+                      margin: EdgeInsets.only(
+                        top: 1.v,
+                        bottom: 3.v,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.h),
+                      child: Text(
+                        "NFT",
+                        style: theme.textTheme.titleLarge,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 61.v),
               Text(
                 "Collect ",
                 style: theme.textTheme.displayMedium,
@@ -41,26 +63,27 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 57.v),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: 248.h,
-                  margin: EdgeInsets.only(right: 18.h),
-                  child: Text(
-                    "NFT is the world first\n  and largest Marketplace",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.titleLarge,
-                  ),
+              SizedBox(
+                width: 248.h,
+                child: Text(
+                  "NFT is the world first\n  and largest Marketplace",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleLarge,
                 ),
               ),
               SizedBox(height: 72.v),
               CustomElevatedButton(
-                width: 290.h,
                 text: "Let’s get startes",
+                margin: EdgeInsets.symmetric(horizontal: 40.h),
+                buttonStyle: CustomButtonStyles.fillPrimary,
                 buttonTextStyle: CustomTextStyles.titleLargeBlack900,
-              )
+                onPressed: () {
+                  onTapLetsget(context);
+                },
+              ),
+              SizedBox(height: 5.v)
             ],
           ),
         ),
@@ -68,22 +91,8 @@ class OnBoardingScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
-    return CustomAppBar(
-      leadingWidth: 62.h,
-      leading: AppbarLeadingImage(
-        imagePath: ImageConstant.imgDiamond1,
-        margin: EdgeInsets.only(
-          left: 30.h,
-          top: 14.v,
-          bottom: 16.v,
-        ),
-      ),
-      title: AppbarTitle(
-        text: "NFT",
-        margin: EdgeInsets.only(left: 15.h),
-      ),
-    );
+  /// Navigates to the homeContainerScreen when the action is triggered.
+  onTapLetsget(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.homeContainerScreen);
   }
 }

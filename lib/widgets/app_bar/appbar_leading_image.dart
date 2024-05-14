@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import '../../core/app_export.dart'; // ignore: must_be_immutable
-// ignore_for_file: must_be_immutable
+import '../../core/app_export.dart';
+import '../custom_icon_button.dart'; // ignore: must_be_immutable
 
 // ignore_for_file: must_be_immutable
-class AppbarLeadingImage extends StatelessWidget {
-  AppbarLeadingImage({Key? key, this.imagePath, this.margin, this.onTap})
+// ignore_for_file: must_be_immutable
+class AppbarLeadingIconbutton extends StatelessWidget {
+  AppbarLeadingIconbutton({Key? key, this.imagePath, this.margin, this.onTap})
       : super(
           key: key,
         );
-
   String? imagePath;
-
   EdgeInsetsGeometry? margin;
-
   Function? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         onTap?.call();
       },
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
-        child: CustomImageView(
-          imagePath: imagePath!,
-          height: 25.v,
-          width: 32.h,
-          fit: BoxFit.contain,
+        child: CustomIconButton(
+          height: 32.adaptSize,
+          width: 32.adaptSize,
+          decoration: IconButtonStyleHelper.fillBlueGray,
+          child: CustomImageView(
+            imagePath: ImageConstant.imgArrowLeft,
+          ),
         ),
       ),
     );

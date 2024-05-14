@@ -29,11 +29,8 @@ class CustomElevatedButton extends BaseButton {
           alignment: alignment,
           margin: margin,
         );
-
   final BoxDecoration? decoration;
-
   final Widget? leftIcon;
-
   final Widget? rightIcon;
 
   @override
@@ -60,8 +57,7 @@ class CustomElevatedButton extends BaseButton {
               leftIcon ?? const SizedBox.shrink(),
               Text(
                 text,
-                style: buttonTextStyle ??
-                    CustomTextStyles.titleLargeBlack900SemiBold,
+                style: buttonTextStyle ?? theme.textTheme.labelLarge,
               ),
               rightIcon ?? const SizedBox.shrink()
             ],
