@@ -4,10 +4,16 @@ import '../core/app_export.dart';
 /// A class that offers pre-defined button styles for customizing button appearance.
 class CustomButtonStyles {
   // Filled button style
-  static ButtonStyle get fillPrimaryTL15 => ElevatedButton.styleFrom(
-        backgroundColor: theme.colorScheme.primary,
+  static ButtonStyle get fillBlueGray => ElevatedButton.styleFrom(
+        backgroundColor: appTheme.blueGray800,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.h),
+        ),
+      );
+  static ButtonStyle get fillPrimary => ElevatedButton.styleFrom(
+        backgroundColor: theme.colorScheme.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.h),
         ),
       );
   static ButtonStyle get fillPrimaryTL22 => ElevatedButton.styleFrom(
@@ -17,10 +23,10 @@ class CustomButtonStyles {
         ),
       );
 // Outline button style
-  static ButtonStyle get outlineOnError => OutlinedButton.styleFrom(
+  static ButtonStyle get outlineGray => OutlinedButton.styleFrom(
         backgroundColor: Colors.transparent,
         side: BorderSide(
-          color: theme.colorScheme.onError,
+          color: appTheme.gray600,
           width: 1,
         ),
         shape: RoundedRectangleBorder(

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../core/app_export.dart'; // ignore: must_be_immutable
 
-class HomelistItemWidget extends StatelessWidget {
-  const HomelistItemWidget({Key? key})
+class HomeItemWidget extends StatelessWidget {
+  const HomeItemWidget({Key? key})
       : super(
           key: key,
         );
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
