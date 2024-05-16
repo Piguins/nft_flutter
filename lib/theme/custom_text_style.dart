@@ -14,6 +14,12 @@ extension on TextStyle {
 /// Additionally, this class includes extensions on [TextStyle] to easily apply specific font families to text.
 class CustomTextStyles {
   // Body text style
+
+  static get bodyMediumLight => theme.textTheme.bodyMedium!.copyWith(
+        fontSize: 15.fSize,
+        fontWeight: FontWeight.w300,
+      );
+
   static get bodyMedium15 => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 15.fSize,
       );
@@ -60,5 +66,10 @@ class CustomTextStyles {
       );
   static get titleSmallSemiBold_1 => theme.textTheme.titleSmall!.copyWith(
         fontWeight: FontWeight.w600,
+      );
+  static get titleSmallOnPrimaryContainer15 =>
+      theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontSize: 15.fSize,
       );
 }

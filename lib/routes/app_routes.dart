@@ -7,6 +7,9 @@ import '../presentation/home_container_screen/home_container_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/wallet_page/wallet_page.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart';
+import '../presentation/transfer_screen/transfer_screen.dart';
+import '../presentation/account_page/account_page.dart';
+
 // import '../presentation/trade_screen/trade_screen.dart';
 
 // ignore_for_file: must_be_immutable
@@ -20,7 +23,9 @@ class AppRoutes {
   static const String ethScreen = '/eth_screen';
   static const String tradeScreen = '/trade_screen';
   static const String appNavigationScreen = '/app_navigation_screen';
+  static const String transferScreen = '/transfer_screen';
   static const String initialRoute = '/initialRoute';
+  static const String accountPage = '/account_page';
 
   static Map<String, WidgetBuilder> routes = {
     loginScreen: (context) => LoginScreen(),
@@ -29,6 +34,7 @@ class AppRoutes {
     bnbScreen: (context) => BnbScreen(),
     ethScreen: (context) => EthScreen(),
     walletPage: (context) => WalletPage(),
+    transferScreen: (context) => TransferScreen(),
 
     // tradeScreen: (context) => TradeScreen(),
     appNavigationScreen: (context) => AppNavigationScreen(),

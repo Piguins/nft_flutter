@@ -153,6 +153,7 @@ class LightCodeColors {
 // Gray
   Color get gray200 => Color(0XFFEAEAEA);
   Color get gray600 => Color(0XFF777A89);
+  Color get gray700 => Color(0XFF575757);
 // Green
   Color get green600 => Color(0XFF34A853);
 // Indigo

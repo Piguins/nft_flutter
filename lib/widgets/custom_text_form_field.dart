@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
+extension TextFormFieldStyleHelper on CustomTextFormField {
+  static OutlineInputBorder get fillBlueGrayTL20 => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20.h),
+        borderSide: BorderSide.none,
+      );
+  static OutlineInputBorder get fillBlueGrayTL121 => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.h),
+        borderSide: BorderSide.none,
+      );
+}
+
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(
       {Key? key,

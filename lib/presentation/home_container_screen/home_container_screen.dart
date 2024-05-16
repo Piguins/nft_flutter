@@ -1,3 +1,4 @@
+import 'package:application/presentation/account_page/account_page.dart';
 import 'package:application/presentation/wallet_page/wallet_page.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
@@ -50,7 +51,7 @@ class HomeContainerScreen extends StatelessWidget {
       case BottomBarEnum.Wallet:
         return AppRoutes.walletPage;
       case BottomBarEnum.Account:
-        return "/";
+        return AppRoutes.accountPage;
       default:
         return "/";
     }
@@ -63,6 +64,8 @@ class HomeContainerScreen extends StatelessWidget {
         return HomePage();
       case AppRoutes.walletPage:
         return WalletPage();
+      case AppRoutes.accountPage:
+        return AccountPage();
       default:
         return DefaultWidget();
     }
