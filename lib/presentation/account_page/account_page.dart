@@ -139,15 +139,16 @@ class AccountPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    top: 6.v,
-                    bottom: 5.v,
-                  ),
-                  child: Text(
-                    "Setting",
-                    style: CustomTextStyles.bodyMedium15,
-                  ),
-                )
+                    padding: EdgeInsets.only(
+                      top: 6.v,
+                      bottom: 5.v,
+                    ),
+                    child: Text(
+                      "Setting",
+                      style: CustomTextStyles.bodyMedium15.copyWith(
+                        fontSize: 15.0, // Thay đổi kích thước font ở đây
+                      ),
+                    ))
               ],
             ),
           ),
