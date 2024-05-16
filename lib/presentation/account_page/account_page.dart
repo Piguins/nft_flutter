@@ -146,7 +146,7 @@ class AccountPage extends StatelessWidget {
                     child: Text(
                       "Setting",
                       style: CustomTextStyles.bodyMedium15.copyWith(
-                        fontSize: 15.0, // Thay đổi kích thước font ở đây
+                        fontSize: 14.0, // Thay đổi kích thước font ở đây
                       ),
                     ))
               ],

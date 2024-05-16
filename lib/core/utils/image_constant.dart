@@ -27,7 +27,7 @@ class ImageConstant {
 // Account images
   static String imgBrightness = '$imagePath/img_brightness.svg';
   static String imgArrowRight = '$imagePath/img_arrow_right.svg';
-  static String imgSecureShieldP = '$imagePath/img_secure_shield_p.svg';
+  static String imgSecureShieldP = '$imagePath/img_secure_shield_p.png';
   static String imgHistorySvgrepoCom = '$imagePath/img_history_svgrepo_com.svg';
   static String imgLawSvgrepoCom = '$imagePath/img_law_svgrepo_com.svg';
   static String imgLogoutSvgrepoCom = '$imagePath/img_logout_svgrepo_com.svg';
