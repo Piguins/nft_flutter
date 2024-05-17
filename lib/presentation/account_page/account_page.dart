@@ -46,7 +46,7 @@ class AccountPage extends StatelessWidget {
                   left: 51.h,
                   right: 35.h,
                 ),
-                child: _buildRowHistorySvgRepo(
+                child: _buildChangPasswordSvgRepo(
                   context,
                   historyText: "Change Password",
                 ),
@@ -72,7 +72,7 @@ class AccountPage extends StatelessWidget {
                   left: 51.h,
                   right: 35.h,
                 ),
-                child: _buildRowHistorySvgRepo(
+                child: _buildTermOfUseSvgRepo(
                   context,
                   historyText: "Term of Use",
                 ),
@@ -207,5 +207,83 @@ class AccountPage extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget _buildChangPasswordSvgRepo(
+    BuildContext context, {
+    required String historyText,
+  }) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      CustomIconButton(
+        height: 35.adaptSize,
+        width: 35.adaptSize,
+        padding: EdgeInsets.all(5.h),
+        child: CustomImageView(
+          imagePath: ImageConstant.imgSecureShieldP,
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(
+          left: 21.h,
+          top: 6.v,
+          bottom: 5.v,
+        ),
+        child: Text(
+          historyText,
+          style: CustomTextStyles.bodyMedium15.copyWith(
+            color: theme.colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+      Spacer(),
+      CustomImageView(
+        imagePath: ImageConstant.imgArrowRight,
+        height: 24.adaptSize,
+        width: 24.adaptSize,
+        margin: EdgeInsets.only(
+          top: 5.v,
+          bottom: 6.v,
+        ),
+      )
+    ]);
+  }
+
+  Widget _buildTermOfUseSvgRepo(
+    BuildContext context, {
+    required String historyText,
+  }) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      CustomIconButton(
+        height: 35.adaptSize,
+        width: 35.adaptSize,
+        padding: EdgeInsets.all(5.h),
+        child: CustomImageView(
+          imagePath: ImageConstant.imgLawSvgrepoCom,
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(
+          left: 21.h,
+          top: 6.v,
+          bottom: 5.v,
+        ),
+        child: Text(
+          historyText,
+          style: CustomTextStyles.bodyMedium15.copyWith(
+            color: theme.colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+      Spacer(),
+      CustomImageView(
+        imagePath: ImageConstant.imgArrowRight,
+        height: 24.adaptSize,
+        width: 24.adaptSize,
+        margin: EdgeInsets.only(
+          top: 5.v,
+          bottom: 6.v,
+        ),
+      )
+    ]);
   }
 }
