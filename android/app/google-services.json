@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "806810511020",
+    "project_id": "nft-project-9e107",
+    "storage_bucket": "nft-project-9e107.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806810511020:android:37dcec12aaa30508956109",
+        "android_client_info": {
+          "package_name": "com.application.nft_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806810511020-tt5hfd8sr5hrgqajbfbjkibdip2okgam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.application.nft_flutter",
+            "certificate_hash": "0022fc1bde5a29900af395c744e17678c34a88a0"
+          }
+        },
+        {
+          "client_id": "806810511020-7mq8o21r4vv4sn22vf52hrjqdff6bi5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW8U1iaSU6vJBH4UCaKV67FN9KA-Hf3r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806810511020-7mq8o21r4vv4sn22vf52hrjqdff6bi5j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "806810511020-coiqoj23j7ssb4k6lc3rg8uc48adueie.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.application.nftFlutter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806810511020:android:96fb2cfa0ff71304956109",
+        "android_client_info": {
+          "package_name": "com.example.nft_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806810511020-l0l33tje27n2fio4e0vdkn75m26a8n62.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nft_flutter",
+            "certificate_hash": "0022fc1bde5a29900af395c744e17678c34a88a0"
+          }
+        },
+        {
+          "client_id": "806810511020-7mq8o21r4vv4sn22vf52hrjqdff6bi5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW8U1iaSU6vJBH4UCaKV67FN9KA-Hf3r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806810511020-7mq8o21r4vv4sn22vf52hrjqdff6bi5j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "806810511020-coiqoj23j7ssb4k6lc3rg8uc48adueie.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.application.nftFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,19 +1,42 @@
+import 'package:application/service/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_outlined_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key})
       : super(
           key: key,
         );
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
+  void initState()
+  {
+    super.initState();
+    AuthService.userStream.listen((event) {
+      if(event !=null)
+      {
+        Navigator.pushReplacementNamed(context, AppRoutes.onBoardingScreen);
+      }
+    });
+  }
+  Future<void> handleGoogleLogin() async{
+    GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
+    await _auth.signInWithProvider(_googleAuthProvider);
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,6 +90,9 @@ class LoginScreen extends StatelessWidget {
                     width: 29.adaptSize,
                   ),
                 ),
+                onPressed:() async{
+                  await AuthService.signInWithGoogle();
+                },
               ),
               SizedBox(height: 54.v),
               _buildRowLineOneOne(context),
@@ -93,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                   right: 43.h,
                 ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, AppRoutes.onBoardingScreen),
+                    Navigator.pushReplacementNamed(context, AppRoutes.onBoardingScreen),
               ),
               SizedBox(height: 41.v),
               Align(
