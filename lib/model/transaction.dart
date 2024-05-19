@@ -7,6 +7,7 @@ class TransactionHistory {
   String newBuyer;
   double newPrice;
   Timestamp transactionOn;
+  static final String TABLE_NAME = 'transaction_history';
 
   TransactionHistory({
     required this.auctionId,

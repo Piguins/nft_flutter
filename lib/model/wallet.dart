@@ -3,6 +3,8 @@ class Wallet{
   String address;
   int numOfCoin;
   String chain;
+  static final String TABLE_NAME = 'wallet';
+
   Wallet({
     required this.address,
     required this.numOfCoin,

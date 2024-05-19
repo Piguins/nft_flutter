@@ -1,10 +1,12 @@
 class PrivateKey {
-  String privateKey;
+  String? privateKey;
   String? passcode;
   String? accountId;
-
+  String? walletAddress;
+  static final String TABLE_NAME = 'private_key';
   PrivateKey({
-    required this.privateKey,
+    this.privateKey,
+    this.walletAddress,
     this.passcode,
     this.accountId,
   });
@@ -15,6 +17,8 @@ class PrivateKey {
           privateKey: json['privateKey']! as String,
           passcode: json['passcode'] as String?,
           accountId: json['accountId'] as String?,
+          walletAddress: json['walletAddress'] as String?,
+
         );
 
   // Method to convert a PrivateKey instance to a JSON object
@@ -23,6 +27,8 @@ class PrivateKey {
       'privateKey': privateKey,
       'passcode': passcode,
       'accountId': accountId,
+      'walletAddress': walletAddress,
+
     };
   }
 }

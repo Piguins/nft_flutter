@@ -6,7 +6,7 @@ class Auction {
   int tokenId;
   String nameNFT;
   String NFTUrl;
-
+  static final String TABLE_NAME = 'auction';
   Auction({
     required this.sellerAddress,
     required this.price,
