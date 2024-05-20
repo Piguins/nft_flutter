@@ -22,6 +22,23 @@ class CustomButtonStyles {
           borderRadius: BorderRadius.circular(22.h),
         ),
       );
+  static get titleMediumOnPrimaryContainer =>
+      theme.textTheme.titleMedium!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+      );
+  static get titleSmallOnPrimaryContainer =>
+      theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontSize: 15.fSize,
+        fontWeight: FontWeight.w600,
+      );
+  static ButtonStyle get fillBlueGrayTL12 => ElevatedButton.styleFrom(
+        backgroundColor: appTheme.blueGray90001,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.h),
+        ),
+      );
+
 // Outline button style
   static ButtonStyle get outlineGray => OutlinedButton.styleFrom(
         backgroundColor: Colors.transparent,

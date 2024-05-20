@@ -3,8 +3,9 @@ import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/custom_text_form_field.dart'; 
+import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
+// ignore_for_file: must_be_immutable
 class TransferScreen extends StatelessWidget {
   TransferScreen({Key? key})
       : super(
@@ -12,14 +13,17 @@ class TransferScreen extends StatelessWidget {
         );
   TextEditingController addressController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
- @override
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: _buildAppBar(context),
-        body: Container(
+        child: Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: _buildAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.only(
+            top: 50.0), // Thêm phần padding 20px trên cùng
+        child: Container(
           width: double.maxFinite,
           padding: EdgeInsets.symmetric(
             horizontal: 38.h,
@@ -31,7 +35,7 @@ class TransferScreen extends StatelessWidget {
                 "SEND TO",
                 style: CustomTextStyles.titleLargeSemiBold,
               ),
- SizedBox(height: 19.v),
+              SizedBox(height: 19.v),
               CustomImageView(
                 imagePath: ImageConstant.imgBinanceCoinBnb,
                 height: 25.v,
@@ -41,37 +45,49 @@ class TransferScreen extends StatelessWidget {
               _buildToAddressColumn(context),
               SizedBox(height: 28.v),
               _buildAmountColumn(context),
-              SizedBox(height: 45.v),
-              Padding(
-                padding: EdgeInsets.only(right: 7.h),
-                child: CustomTextFormField(
-                  controller: descriptionController,
-                  hintText:
-                      "The network you have selected. Pleae ensure that the withdrawal suppports network. You will lose your assets if the chossen platform does not support retrievals ",
-                  textInputAction: TextInputAction.done,
-                  maxLines: 3,
-                  borderDecoration: TextFormFieldStyleHelper.fillBlueGrayTL121,
-                  fillColor: appTheme.blueGray90002,
+              SizedBox(height: 62.v),
+              Container(
+                width: 308.h,
+                margin: EdgeInsets.only(
+                  left: 17.h,
+                  right: 28.h,
+                ),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            "The network you have selected. Pleae ensure that the withdrawal suppports network. You will ",
+                        style: CustomTextStyles.bodySmallGray100,
+                      ),
+                      TextSpan(
+                        text:
+                            "lose your assets if the chossen platform does not support retrievals ",
+                        style: CustomTextStyles.bodySmallOnError,
+                      )
+                    ],
+                  ),
+                  textAlign: TextAlign.left,
                 ),
               ),
- Spacer(
-                flex: 37,
+              Spacer(
+                flex: 40,
               ),
               CustomElevatedButton(
                 width: 199.h,
                 text: "Confirm",
               ),
               Spacer(
-                flex: 62,
+                flex: 59,
               )
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 
- /// Section Widget
+  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       leadingWidth: double.maxFinite,
@@ -84,7 +100,8 @@ class TransferScreen extends StatelessWidget {
       ),
     );
   }
-/// Section Widget
+
+  /// Section Widget
   Widget _buildToAddressColumn(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 7.h),
@@ -107,12 +124,12 @@ class TransferScreen extends StatelessWidget {
                 vertical: 8.v,
               ),
               child: CustomImageView(
-                imagePath: ImageConstant.imgSettings,
+                imagePath: ImageConstant.imgThumbsup,
                 height: 24.adaptSize,
                 width: 24.adaptSize,
               ),
             ),
-  suffixConstraints: BoxConstraints(
+            suffixConstraints: BoxConstraints(
               maxHeight: 40.v,
             ),
           )
@@ -121,7 +138,7 @@ class TransferScreen extends StatelessWidget {
     );
   }
 
-/// Section Widget
+  /// Section Widget
   Widget _buildAmountColumn(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: 7.h),
@@ -138,15 +155,15 @@ class TransferScreen extends StatelessWidget {
           SizedBox(height: 12.v),
           CustomTextFormField(
             controller: amountController,
+            textInputAction: TextInputAction.done,
           )
         ],
       ),
     );
   }
+
   /// Navigates back to the previous screen.
   onTapArrowleftone(BuildContext context) {
     Navigator.pop(context);
   }
 }
-
-

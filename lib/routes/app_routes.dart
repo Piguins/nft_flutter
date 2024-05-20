@@ -8,13 +8,14 @@ import '../presentation/login_screen/login_screen.dart';
 import '../presentation/wallet_page/wallet_page.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart';
 import '../presentation/transfer_screen/transfer_screen.dart';
-import '../presentation/account_page/account_page.dart';
+import '../presentation/receive_screen/receive_screen.dart';
 
 // import '../presentation/trade_screen/trade_screen.dart';
 
 // ignore_for_file: must_be_immutable
 class AppRoutes {
   static const String loginScreen = '/login_screen';
+  static const String receiveScreen = '/receive_screen';
   static const String onBoardingScreen = '/on_boarding_screen';
   static const String homePage = '/home_page';
   static const String homeContainerScreen = '/home_container_screen';
@@ -34,6 +35,7 @@ class AppRoutes {
     bnbScreen: (context) => BnbScreen(),
     ethScreen: (context) => EthScreen(),
     walletPage: (context) => WalletPage(),
+    receiveScreen: (context) => ReceiveScreen(),
     transferScreen: (context) => TransferScreen(),
 
     // tradeScreen: (context) => TradeScreen(),

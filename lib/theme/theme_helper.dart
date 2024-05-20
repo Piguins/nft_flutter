@@ -151,6 +151,7 @@ class LightCodeColors {
   Color get blueGray90001 => Color(0XFF2C3148);
   Color get blueGray90002 => Color(0XFF2C3147);
 // Gray
+  Color get gray100 => Color(0XFFF7F7F7);
   Color get gray200 => Color(0XFFEAEAEA);
   Color get gray600 => Color(0XFF777A89);
   Color get gray700 => Color(0XFF575757);
@@ -160,4 +161,5 @@ class LightCodeColors {
   Color get indigo500 => Color(0XFF4F5D9B);
 // Yellow
   Color get yellow700 => Color(0XFFF3BA2F);
+  Color get White => Color.fromARGB(255, 255, 255, 255);
 }

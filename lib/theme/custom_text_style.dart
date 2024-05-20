@@ -18,8 +18,12 @@ class CustomTextStyles {
   static get bodyMediumLight => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 15.fSize,
         fontWeight: FontWeight.w300,
+        color: Colors.white,
       );
-
+  static get bodySmallOnError => theme.textTheme.bodySmall!.copyWith(
+        color: theme.colorScheme.onError,
+        fontSize: 11.fSize,
+      );
   static get bodyMedium15 => theme.textTheme.bodyMedium!.copyWith(
         fontSize: 15.fSize,
         color: Colors.white,
@@ -29,6 +33,10 @@ class CustomTextStyles {
       );
   static get bodyMediumPrimary => theme.textTheme.bodyMedium!.copyWith(
         color: Colors.white,
+      );
+  static get bodySmallGray100 => theme.textTheme.bodySmall!.copyWith(
+        color: appTheme.gray100,
+        fontSize: 11.fSize,
       );
 
 // Title text style
@@ -53,7 +61,7 @@ class CustomTextStyles {
       );
   static get titleSmallOnSecondaryContainer =>
       theme.textTheme.titleSmall!.copyWith(
-        color: theme.colorScheme.onSecondaryContainer,
+        color: appTheme.White,
         fontWeight: FontWeight.w600,
       );
   static get titleSmallPrimary => theme.textTheme.titleSmall!.copyWith(

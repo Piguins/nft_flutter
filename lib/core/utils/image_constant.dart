@@ -23,7 +23,7 @@ class ImageConstant {
   static String imgArrowdown = '$imagePath/img_arrowdown.svg';
 
 // Transfer images
-  static String imgSettings = '$imagePath/img_settings.svg';
+  static String imgThumbsup = '$imagePath/img_thumbsup.svg';
 // Account images
   static String imgBrightness = '$imagePath/img_brightness.svg';
   static String imgArrowRight = '$imagePath/img_arrow_right.svg';
@@ -31,7 +31,8 @@ class ImageConstant {
   static String imgHistorySvgrepoCom = '$imagePath/img_history_svgrepo_com.svg';
   static String imgLawSvgrepoCom = '$imagePath/img_law_svgrepo_com.svg';
   static String imgLogoutSvgrepoCom = '$imagePath/img_logout_svgrepo_com.svg';
-
+// Receive images
+  static String imgQrcodeDefault1 = '$imagePath/img_qrcode_default_1.png';
 // History Auction images
   static String imgRectangle23 = '$imagePath/img_rectangle_23.png';
   static String imgSuccessRoundSvgrepoCom =
