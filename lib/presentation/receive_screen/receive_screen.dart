@@ -70,7 +70,22 @@ class ReceiveScreen extends StatelessWidget {
               ),
               Spacer(
                 flex: 58,
-              )
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ),
+              Spacer(
+                flex: 58,
+              ),
             ],
           ),
         ),
@@ -84,7 +99,7 @@ class ReceiveScreen extends StatelessWidget {
       leadingWidth: double.maxFinite,
       leading: AppbarLeadingIconbutton(
         imagePath: ImageConstant.imgArrowLeft,
-        margin: EdgeInsets.fromLTRB(35.h, 12.v, 363.h, 12.v),
+        margin: EdgeInsets.fromLTRB(15.h, 25.v, 363.h, 12.v),
         onTap: () {
           onTapArrowleftone(context);
         },

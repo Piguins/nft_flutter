@@ -5,7 +5,6 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class TransferScreen extends StatelessWidget {
   TransferScreen({Key? key})
       : super(
@@ -16,7 +15,7 @@ class TransferScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
@@ -75,8 +74,23 @@ class TransferScreen extends StatelessWidget {
                 text: "Confirm",
               ),
               Spacer(
+                flex: 40,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ),
+              Spacer(
                 flex: 59,
-              )
+              ),
             ],
           ),
         ),
@@ -129,7 +143,7 @@ class TransferScreen extends StatelessWidget {
             suffixConstraints: BoxConstraints(
               maxHeight: 40.v,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -153,7 +167,7 @@ class TransferScreen extends StatelessWidget {
           CustomTextFormField(
             controller: amountController,
             textInputAction: TextInputAction.done,
-          )
+          ),
         ],
       ),
     );
