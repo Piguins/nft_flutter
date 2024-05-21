@@ -16,14 +16,11 @@ class TransferScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: _buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            top: 50.0), // Thêm phần padding 20px trên cùng
-        child: Container(
+    return SizedBox(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: _buildAppBar(context),
+        body: Container(
           width: double.maxFinite,
           padding: EdgeInsets.symmetric(
             horizontal: 38.h,
@@ -84,7 +81,7 @@ class TransferScreen extends StatelessWidget {
           ),
         ),
       ),
-    ));
+    );
   }
 
   /// Section Widget
@@ -93,7 +90,7 @@ class TransferScreen extends StatelessWidget {
       leadingWidth: double.maxFinite,
       leading: AppbarLeadingIconbutton(
         imagePath: ImageConstant.imgArrowLeft,
-        margin: EdgeInsets.fromLTRB(35.h, 12.v, 363.h, 12.v),
+        margin: EdgeInsets.fromLTRB(15.h, 25.v, 363.h, 12.v),
         onTap: () {
           onTapArrowleftone(context);
         },
