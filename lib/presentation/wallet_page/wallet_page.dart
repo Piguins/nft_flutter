@@ -1,5 +1,7 @@
 import 'package:application/presentation/bnb_screen/bnb_screen.dart';
 import 'package:application/presentation/eth_screen/eth_screen.dart';
+import 'package:application/presentation/receive_screen/receive_screen.dart';
+import 'package:application/presentation/transfer_screen/transfer_screen.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -128,6 +130,13 @@ class WalletPage extends StatelessWidget {
                         width: 35.adaptSize,
                         padding: EdgeInsets.all(4.h),
                         decoration: IconButtonStyleHelper.fillIndigo,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReceiveScreen()),
+                          );
+                        },
                         child: CustomImageView(
                           imagePath: ImageConstant.imgReceiveMoneySvgrepoCom,
                         ),
@@ -149,6 +158,13 @@ class WalletPage extends StatelessWidget {
                         width: 35.adaptSize,
                         padding: EdgeInsets.all(4.h),
                         decoration: IconButtonStyleHelper.fillIndigo,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TransferScreen()),
+                          );
+                        },
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
                         ),

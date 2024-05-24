@@ -1,3 +1,5 @@
+import 'package:application/presentation/receive_screen/receive_screen.dart';
+import 'package:application/presentation/transfer_screen/transfer_screen.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_icon_button.dart';
@@ -118,6 +120,13 @@ class EthScreen extends StatelessWidget {
                       width: 35.adaptSize,
                       padding: EdgeInsets.all(4.h),
                       decoration: IconButtonStyleHelper.fillIndigo,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ReceiveScreen()),
+                        );
+                      },
                       child: CustomImageView(
                         imagePath: ImageConstant.imgReceiveMoneySvgrepoCom,
                       ),
@@ -141,6 +150,13 @@ class EthScreen extends StatelessWidget {
                         width: 35.adaptSize,
                         padding: EdgeInsets.all(4.h),
                         decoration: IconButtonStyleHelper.fillIndigo,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TransferScreen()),
+                          );
+                        },
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
                         ),
