@@ -6,7 +6,6 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class ReceiveScreen extends StatelessWidget {
   ReceiveScreen({Key? key})
       : super(
@@ -20,73 +19,68 @@ class ReceiveScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
-            horizontal: 41.h,
-            vertical: 43.v,
-          ),
-          child: Column(
-            children: [
-              CustomImageView(
-                imagePath: ImageConstant.imgQrcodeDefault1,
-                height: 180.adaptSize,
-                width: 180.adaptSize,
-                radius: BorderRadius.circular(
-                  25.h,
-                ),
-              ),
-              SizedBox(height: 23.v),
-              Text(
-                "Scan address to receive payment",
-                style: CustomTextStyles.bodyMediumLight,
-              ),
-              SizedBox(height: 18.v),
-              Text(
-                "RECEIVE",
-                style: CustomTextStyles.titleSmallOnSecondaryContainer,
-              ),
-              SizedBox(height: 22.v),
-              CustomElevatedButton(
-                height: 29.v,
-                width: 102.h,
-                text: "ETH",
-                buttonStyle: CustomButtonStyles.fillBlueGrayTL12,
-                buttonTextStyle:
-                    CustomTextStyles.titleSmallOnSecondaryContainer,
-              ),
-              SizedBox(height: 34.v),
-              CustomTextFormField(
-                controller: addressoneController,
-                hintText: "13Ghuiasfj914Xi18i258Iyuegweg25235wgej",
-                textInputAction: TextInputAction.done,
-              ),
-              Spacer(
-                flex: 41,
-              ),
-              CustomElevatedButton(
-                width: 199.h,
-                text: "Copy Address",
-              ),
-              Spacer(
-                flex: 58,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14.0,
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(
+              horizontal: 41.h,
+              vertical: 43.v,
+            ),
+            child: Column(
+              children: [
+                CustomImageView(
+                  imagePath: ImageConstant.imgQrcodeDefault1,
+                  height: 180.adaptSize,
+                  width: 180.adaptSize,
+                  radius: BorderRadius.circular(
+                    25.h,
                   ),
                 ),
-              ),
-              Spacer(
-                flex: 58,
-              ),
-            ],
+                SizedBox(height: 23.v),
+                Text(
+                  "Scan address to receive payment",
+                  style: CustomTextStyles.bodyMediumLight,
+                ),
+                SizedBox(height: 18.v),
+                Text(
+                  "RECEIVE",
+                  style: CustomTextStyles.titleSmallOnSecondaryContainer,
+                ),
+                SizedBox(height: 22.v),
+                CustomElevatedButton(
+                  height: 29.v,
+                  width: 102.h,
+                  text: "ETH",
+                  buttonStyle: CustomButtonStyles.fillBlueGrayTL12,
+                  buttonTextStyle:
+                      CustomTextStyles.titleSmallOnSecondaryContainer,
+                ),
+                SizedBox(height: 34.v),
+                CustomTextFormField(
+                  controller: addressoneController,
+                  hintText: "13Ghuiasfj914Xi18i258Iyuegweg25235wgej",
+                  textInputAction: TextInputAction.done,
+                ),
+                SizedBox(height: 34.v), // Adjusted spacing
+                CustomElevatedButton(
+                  width: 199.h,
+                  text: "Copy Address",
+                ),
+                SizedBox(height: 34.v), // Adjusted spacing
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
