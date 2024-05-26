@@ -19,79 +19,74 @@ class TransferScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
-            horizontal: 38.h,
-            vertical: 15.v,
-          ),
-          child: Column(
-            children: [
-              Text(
-                "SEND TO",
-                style: CustomTextStyles.titleLargeSemiBold,
-              ),
-              SizedBox(height: 19.v),
-              CustomImageView(
-                imagePath: ImageConstant.imgBinanceCoinBnb,
-                height: 25.v,
-                width: 32.h,
-              ),
-              SizedBox(height: 42.v),
-              _buildToAddressColumn(context),
-              SizedBox(height: 28.v),
-              _buildAmountColumn(context),
-              SizedBox(height: 62.v),
-              Container(
-                width: 308.h,
-                margin: EdgeInsets.only(
-                  left: 17.h,
-                  right: 28.h,
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(
+              horizontal: 38.h,
+              vertical: 15.v,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "SEND TO",
+                  style: CustomTextStyles.titleLargeSemiBold,
                 ),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            "The network you have selected. Pleae ensure that the withdrawal suppports network. You will ",
-                        style: CustomTextStyles.bodySmallGray100,
-                      ),
-                      TextSpan(
-                        text:
-                            "lose your assets if the chossen platform does not support retrievals ",
-                        style: CustomTextStyles.bodySmallOnError,
-                      )
-                    ],
+                SizedBox(height: 19.v),
+                CustomImageView(
+                  imagePath: ImageConstant.imgBinanceCoinBnb,
+                  height: 25.v,
+                  width: 32.h,
+                ),
+                SizedBox(height: 42.v),
+                _buildToAddressColumn(context),
+                SizedBox(height: 28.v),
+                _buildAmountColumn(context),
+                SizedBox(height: 62.v),
+                Container(
+                  width: 308.h,
+                  margin: EdgeInsets.only(
+                    left: 17.h,
+                    right: 28.h,
                   ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              Spacer(
-                flex: 40,
-              ),
-              CustomElevatedButton(
-                width: 199.h,
-                text: "Confirm",
-              ),
-              Spacer(
-                flex: 40,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14.0,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "The network you have selected. Please ensure that the withdrawal supports the network. You will ",
+                          style: CustomTextStyles.bodySmallGray100,
+                        ),
+                        TextSpan(
+                          text:
+                              "lose your assets if the chosen platform does not support retrievals ",
+                          style: CustomTextStyles.bodySmallOnError,
+                        )
+                      ],
+                    ),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-              ),
-              Spacer(
-                flex: 59,
-              ),
-            ],
+                SizedBox(height: 20.v), // Adjust as needed
+                CustomElevatedButton(
+                  width: 199.h,
+                  text: "Confirm",
+                ),
+                SizedBox(height: 20.v), // Adjust as needed
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
