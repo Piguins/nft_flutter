@@ -21,6 +21,7 @@ class ImageConstant {
   static String imgRectangle9280x348 = '$imagePath/img_rectangle_9_280x348.png';
 // Wallet images
   static String imgArrowdown = '$imagePath/img_arrowdown.svg';
+  static String imgWarningSvg = '$imagePath/image_warning.svg';
 
 // Transfer images
   static String imgThumbsup = '$imagePath/img_thumbsup.svg';

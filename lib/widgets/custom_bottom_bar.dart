@@ -122,9 +122,12 @@ class CustomBottomBarState extends State<CustomBottomBar> {
           );
         }),
         onTap: (index) {
-          selectedIndex = index;
-          widget.onChanged?.call(bottomMenuList[index].type);
-          setState(() {});
+          setState(() {
+            selectedIndex = index;
+            if (widget.onChanged != null) {
+              widget.onChanged!(bottomMenuList[index].type);
+            }
+          });
         },
       ),
     );

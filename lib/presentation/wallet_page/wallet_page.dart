@@ -2,6 +2,7 @@ import 'package:application/presentation/bnb_screen/bnb_screen.dart';
 import 'package:application/presentation/eth_screen/eth_screen.dart';
 import 'package:application/presentation/receive_screen/receive_screen.dart';
 import 'package:application/presentation/transfer_screen/transfer_screen.dart';
+import 'package:application/presentation/wallet_page/screens/no_wallet_page.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
@@ -9,67 +10,91 @@ import '../../widgets/custom_drop_down.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_icon_button.dart'; // ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
-// ignore_for_file: must_be_immutable
-class WalletPage extends StatelessWidget {
-  WalletPage({Key? key})
-      : super(
+class WalletPage extends StatefulWidget {
+  bool? isWalletEmpty;
+  WalletPage({
+    Key? key,
+    this.isWalletEmpty,
+  }) : super(
           key: key,
         );
 
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
   List<String> dropdownItemList = [
     "ETH",
     "BNB",
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          width: double.maxFinite,
-          decoration: AppDecoration.fillOnPrimary,
-          child: Column(
-            children: [
-              _buildWalletDetailsSection(context),
-              SizedBox(height: 20.v),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 34.h),
-                  child: Text(
-                    "Wallet Account",
-                    style: CustomTextStyles.bodyMediumPrimary,
+        body: FutureBuilder<bool>(future: () async {
+          return widget.isWalletEmpty ?? true;
+        }(), builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("Error"),
+            );
+          }
+          bool data = snapshot.data!;
+          if (data) {
+            return NoWalletPage();
+          }
+          return Container(
+            width: double.maxFinite,
+            decoration: AppDecoration.fillOnPrimary,
+            child: Column(
+              children: [
+                _buildWalletDetailsSection(context),
+                SizedBox(height: 20.v),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 34.h),
+                    child: Text(
+                      "Wallet Account",
+                      style: CustomTextStyles.bodyMediumPrimary,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 34.v),
-              _buildWalletBalancesStack(context),
-              SizedBox(height: 35.v),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 34.h),
-                  child: Text(
-                    "Owned NFTs",
-                    style: CustomTextStyles.bodyMediumPrimary,
+                SizedBox(height: 34.v),
+                _buildWalletBalancesStack(context),
+                SizedBox(height: 35.v),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 34.h),
+                    child: Text(
+                      "Owned NFTs",
+                      style: CustomTextStyles.bodyMediumPrimary,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 49.v),
-              CustomImageView(
-                imagePath: ImageConstant.imgBoxSvgrepoCom,
-                height: 50.adaptSize,
-                width: 50.adaptSize,
-              ),
-              SizedBox(height: 34.v),
-              Text(
-                "No NFT Owned, please buy some",
-                style: CustomTextStyles.titleSmallBluegray90002,
-              ),
-              SizedBox(height: 5.v)
-            ],
-          ),
-        ),
+                SizedBox(height: 49.v),
+                CustomImageView(
+                  imagePath: ImageConstant.imgBoxSvgrepoCom,
+                  height: 50.adaptSize,
+                  width: 50.adaptSize,
+                ),
+                SizedBox(height: 34.v),
+                Text(
+                  "No NFT Owned, please buy some",
+                  style: CustomTextStyles.titleSmallBluegray90002,
+                ),
+                SizedBox(height: 5.v)
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
