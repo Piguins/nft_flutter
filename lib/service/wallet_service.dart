@@ -43,4 +43,19 @@ class WalletService{
       }
     }
   }
+  Future<dynamic> getBalanceWallet(String address, String chain) async{
+    if(AuthService.user!=null)
+    {
+      HashMap<String, dynamic> data = HashMap();
+      final jsonData = jsonEncode(data);
+      final respone = await http.post(Uri.parse(API_URL+ '/api/wallet/balance?address=$address&chian=$chain'));
+      if(respone.statusCode == 200){
+        final jsonDataRes = jsonDecode(respone.body);
+        return jsonDataRes;
+      }
+      else{
+        throw Exception("Failed to create auction");
+      }
+    }
+  }
 }
