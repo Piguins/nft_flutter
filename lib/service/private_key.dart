@@ -26,7 +26,8 @@ class PrivateKeyService{
         data['privateKey'] = privateKey;
         data['walletAddress'] = walletAddress;
         var jsonData = jsonEncode(data);
-        final respone = await http.post(Uri.parse(API_URL + '/api/private-key/create'), headers: {'Content-Type': 'application/json'}, body: jsonData);
+        final respone = await http.post(Uri.parse(API_URL + '/api/private-key/  ')
+        , headers: {'Content-Type': 'application/json'}, body: jsonData);
         if(respone.statusCode == 200)
         {
           final jsonDataRes = jsonDecode(respone.body);

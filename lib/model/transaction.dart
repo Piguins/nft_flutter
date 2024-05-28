@@ -1,21 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TransactionHistory {
-  String auctionId;
-  String lastBuyer;
-  double lastPrice;
-  String newBuyer;
-  double newPrice;
-  Timestamp transactionOn;
+  String? auctionId;
+  String? lastBuyer;
+  double? lastPrice;
+  String? newBuyer;
+  double? newPrice;
+  Timestamp? transactionOn;
   static final String TABLE_NAME = 'transaction_history';
 
   TransactionHistory({
-    required this.auctionId,
-    required this.lastBuyer,
-    required this.lastPrice,
-    required this.newBuyer,
-    required this.newPrice,
-    required this.transactionOn,
+     this.auctionId,
+     this.lastBuyer,
+     this.lastPrice,
+     this.newBuyer,
+     this.newPrice,
+     this.transactionOn,
   });
 
   // Constructor to create a TransactionHistory instance from a JSON object
