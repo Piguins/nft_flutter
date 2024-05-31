@@ -1,5 +1,7 @@
+import 'package:application/provider/wallet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'verify_phrase_page.dart';
 
@@ -12,27 +14,16 @@ class GeneratePhrasePage extends StatefulWidget {
 
 class _GeneratePhrasePageState extends State<GeneratePhrasePage> {
   List<String>? seedPhrase;
+  
 
   Future<List<String>> _generateSeedPhrase() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return [
-      'one',
-      'two',
-      'three',
-      'four',
-      'five',
-      'six',
-      'seven',
-      'eight',
-      'nine',
-      'ten',
-      'eleven',
-      'twelve'
-    ];
+    return seedPhrase!;
   }
-
   @override
   Widget build(BuildContext context) {
+    final walletProvider = Provider.of<WalletProvider>(context);
+    final mnemonic = walletProvider.generateMnemonic();
+    seedPhrase = mnemonic.split(' ');
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Wallet', style: TextStyle(color: Colors.white)),
@@ -113,7 +104,7 @@ class _GeneratePhrasePageState extends State<GeneratePhrasePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => VerifyPhrasePage()));
+                                  builder: (context) => VerifyPhrasePage(correctSeedPhrase: seedPhrase!)));
                         }
                       },
                       child: const Text(

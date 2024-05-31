@@ -21,14 +21,25 @@ class WalletService{
   Stream<QuerySnapshot> getStreamAuctionById(String accountId, String chain){
     return _walletRef.where('accountId', isEqualTo: accountId).where('chain', isEqualTo: chain).snapshots();
   }
-  Future<dynamic> createNewWallet(String mnemonic, String accountId, String chain) async{
+  Future<QueryDocumentSnapshot<Object?>?> findWalletByID(String accountId) async{
+    if(AuthService.user!=null)
+    {
+      var snapshot = await _walletRef.where('accountId', isEqualTo: accountId).limit(1).get();
+      if(!snapshot.docs.isEmpty){
+        var doc = snapshot.docs.first;
+        return doc;
+      }
+      else{
+        return null;
+      }
+    }
+    return null;
+  }
+  Future<dynamic> createNewWallet(String address, String accountId, String chain) async{
     if(AuthService.user!=null)
     {
       HashMap<String, dynamic> data = HashMap();
-      String? private = await WalletProvider().getPrivateKey(mnemonic);
-      EthereumAddress public = await WalletProvider().getPublicKey(private);
-      private = null;
-      data['address'] = public.hex;
+      data['address'] = address;
       data['accountId'] = AuthService.user!.uid;
       data['chain'] = chain;
       final jsonData = jsonEncode(data);
@@ -47,8 +58,31 @@ class WalletService{
     if(AuthService.user!=null)
     {
       HashMap<String, dynamic> data = HashMap();
+      data['address'] = address;
+      data['chain'] = chain;
       final jsonData = jsonEncode(data);
-      final respone = await http.post(Uri.parse(API_URL+ '/api/wallet/balance?address=$address&chian=$chain'));
+      final respone = await http.post(Uri.parse(API_URL+ '/api/wallet/get-balance'), headers: {'Content-Type': 'application/json'},
+      body: jsonData);
+      if(respone.statusCode == 200){
+        final jsonDataRes = jsonDecode(respone.body);
+        return jsonDataRes;
+      }
+      else{
+        throw Exception("Failed to create auction");
+      }
+    }
+  }
+    Future<dynamic> transferMoney(String from, String to, double amount ) async{
+    if(AuthService.user!=null)
+    {
+      HashMap<String, dynamic> data = HashMap();
+      data['from'] = from;
+      data['to'] = to;
+      data['amount'] = amount.toString();
+      data['accountId'] = AuthService.user!.uid;
+      final jsonData = jsonEncode(data);
+      final respone = await http.post(Uri.parse(API_URL+ '/api/wallet/send-transaction'), headers: {'Content-Type': 'application/json'},
+      body: jsonData);
       if(respone.statusCode == 200){
         final jsonDataRes = jsonDecode(respone.body);
         return jsonDataRes;

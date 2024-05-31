@@ -1,7 +1,14 @@
+import 'dart:collection';
+
+import 'package:application/core/utils/prefrence_variable.dart';
+import 'package:application/model/private_key.dart';
 import 'package:application/service/auth_service.dart';
+import 'package:application/service/private_key.dart';
+import 'package:application/service/wallet_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_outlined_button.dart';
@@ -22,12 +29,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
-    AuthService.userStream.listen((event) {
+    WalletService walletService = WalletService();
+    AuthService.userStream.listen( (event)async {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
       if (event != null) {
         Navigator.pushReplacementNamed(context, AppRoutes.onBoardingScreen);
+          var wallet = await walletService.findWalletByID(event.uid);
+        if(wallet!=null){
+          preferences.setString(PreferenceVariable.WALLET_ADDRESS, wallet.id);
+        }
+        else{
+          preferences.remove(PreferenceVariable.WALLET_ADDRESS);
+        }
+      }
+      else{
+          preferences.remove(PreferenceVariable.WALLET_ADDRESS);
       }
     });
   }
