@@ -1,18 +1,128 @@
+import 'package:application/core/utils/prefrence_variable.dart';
+import 'package:application/service/wallet_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web3dart/web3dart.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-class TransferScreen extends StatelessWidget {
-  TransferScreen({Key? key})
+class TransferScreen extends StatefulWidget {
+  TransferScreen({Key? key, })
       : super(
           key: key,
         );
+
+  @override
+  State<TransferScreen> createState() => _TransferScreenState();
+}
+
+class _TransferScreenState extends State<TransferScreen> {
   TextEditingController addressController = TextEditingController();
+
   TextEditingController amountController = TextEditingController();
 
+  WalletService walletService = WalletService();
+  bool _isLoading = false;
+  Future<void> transferMoney() async {
+     bool result = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Caution'),
+          content: RichText(
+          text: TextSpan(
+            style: DefaultTextStyle.of(context).style,
+            children: <TextSpan>[
+              TextSpan(text: 'Are you sure to transfer to this address '),
+              TextSpan(text: '${addressController.text}', style: TextStyle(fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: ()async {
+                Navigator.of(context).pop(true);
+                
+              },
+            ),
+          ],
+        );
+      },
+    );
+    if(result){
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+        try{
+          if(isValidEthereumAddress(addressController.text))
+          {
+              print('address to ${addressController.text}');
+              print('amount to ${amountController.text}');
+              setState(() {
+                _isLoading = true;
+              });
+              await walletService.transferMoney(preferences.getString(PreferenceVariable.WALLET_ADDRESS)!, addressController.text, double.parse(amountController.text));
+              Fluttertoast.showToast(
+              msg: "Transfer money success",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Color.fromARGB(255, 31, 89, 171),
+              textColor: Colors.white,
+              fontSize: 16.0
+              );
+            setState(() {
+                _isLoading = false;
+              });
+          }
+          else{
+            Fluttertoast.showToast(
+              msg: "Not valid address",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Color.fromARGB(255, 236, 109, 100),
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+        }
+        }
+        catch(e){
+              Fluttertoast.showToast(
+              msg: "Transfer coin address failed",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Color.fromARGB(255, 236, 109, 100),
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+                  setState(() {
+                _isLoading = false;
+              });
+        }
+        finally{
+        }
+    }
+    
+  }
+    bool isValidEthereumAddress(String address) {
+      try {
+        EthereumAddress.fromHex(address);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -68,10 +178,13 @@ class TransferScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.v), // Adjust as needed
-                CustomElevatedButton(
-                  width: 199.h,
-                  text: "Confirm",
-                ),
+                _isLoading
+                ? CircularProgressIndicator()
+                : CustomElevatedButton(
+                    width: 199.h,
+                    text: "Confirm",
+                    onPressed: () => transferMoney(),
+                          ),
                 SizedBox(height: 20.v), // Adjust as needed
                 TextButton(
                   onPressed: () {

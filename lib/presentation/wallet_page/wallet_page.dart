@@ -1,9 +1,18 @@
+import 'dart:collection';
+import 'dart:ffi';
+
+import 'package:application/core/utils/prefrence_variable.dart';
 import 'package:application/presentation/bnb_screen/bnb_screen.dart';
 import 'package:application/presentation/eth_screen/eth_screen.dart';
 import 'package:application/presentation/receive_screen/receive_screen.dart';
 import 'package:application/presentation/transfer_screen/transfer_screen.dart';
 import 'package:application/presentation/wallet_page/screens/no_wallet_page.dart';
+import 'package:application/service/auth_service.dart';
+import 'package:application/service/wallet_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web3dart/web3dart.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_drop_down.dart';
@@ -21,6 +30,7 @@ class WalletPage extends StatefulWidget {
 
   @override
   State<WalletPage> createState() => _WalletPageState();
+  double coin = 0;
 }
 
 class _WalletPageState extends State<WalletPage> {
@@ -28,13 +38,48 @@ class _WalletPageState extends State<WalletPage> {
     "ETH",
     "BNB",
   ];
+  @override
+  void initState(){
+    super.initState();
+  }
+  Future<void> getBalanceWallet() async{
+
+  }
+  late SharedPreferences preferences;
+  String? address;
+  String? addressText;
+  Future<void> getAddress() async{
+    preferences = await SharedPreferences.getInstance();
+    address = truncateWithEllipsis(preferences.getString(PreferenceVariable.WALLET_ADDRESS)!,10);
+    
+  }
+  var walletStreaming = WalletService().getStreamAuctionById(AuthService.user!.uid, 'bsc');
+  String truncateWithEllipsis(String text, int maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength) + '...';
+}
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<bool>(future: () async {
-          return widget.isWalletEmpty ?? true;
+          try{
+          preferences = await SharedPreferences.getInstance();
+          address = preferences.getString(PreferenceVariable.WALLET_ADDRESS);
+          if(address !=null)
+          {
+            addressText = truncateWithEllipsis(address!,10);
+            WalletService walletService = WalletService();
+            walletService.getBalanceWallet(address!, 'bsc');
+          }
+          }
+          catch(e){
+            print(e);
+          }
+          return  address !=null;
         }(), builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -46,7 +91,7 @@ class _WalletPageState extends State<WalletPage> {
             );
           }
           bool data = snapshot.data!;
-          if (data) {
+          if (!data) {
             return NoWalletPage();
           }
           return Container(
@@ -98,9 +143,14 @@ class _WalletPageState extends State<WalletPage> {
       ),
     );
   }
-
+    double getConvertCoin(int input) {
+      double result = input / 1e18;
+      String resultString = result.toStringAsFixed(5);
+      return double.parse(resultString);
+    }
   /// Section Widget
   Widget _buildWalletDetailsSection(BuildContext context) {
+
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 56.h,
@@ -128,15 +178,30 @@ class _WalletPageState extends State<WalletPage> {
             items: dropdownItemList,
           ),
           SizedBox(height: 28.v),
-          Text(
-            "0 ETH",
-            style: CustomTextStyles.bodyMediumPrimary,
-          ),
+          StreamBuilder<QuerySnapshot<Object?>>(
+                stream: walletStreaming, // Gọi stream
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading...");
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    String stringData = (snapshot.data?.docs[0].data()as Map<String,dynamic>)['numOfCoin'];
+                    double data = getConvertCoin( int.parse(stringData));
+                    return Text(
+                      "${data} BSC",
+                      style: CustomTextStyles.bodyMediumPrimary,
+                    );
+                  } else {
+                    return Text("0 BSC");
+                  }
+                },
+              ),
           SizedBox(height: 24.v),
           CustomElevatedButton(
             height: 45.v,
             width: 171.h,
-            text: "13GUaKH...Mr8mM4i",
+            text: addressText?? '0x12321321',
             buttonStyle: CustomButtonStyles.fillBlueGray,
             buttonTextStyle: theme.textTheme.bodyMedium!,
           ),
@@ -159,7 +224,7 @@ class _WalletPageState extends State<WalletPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReceiveScreen()),
+                                builder: (context) => ReceiveScreen(address: address,)),
                           );
                         },
                         child: CustomImageView(
@@ -187,8 +252,8 @@ class _WalletPageState extends State<WalletPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TransferScreen()),
-                          );
+                                builder: (context) => TransferScreen(),
+                          ));
                         },
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
@@ -250,26 +315,41 @@ class _WalletPageState extends State<WalletPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BnbScreen()),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 18.h),
-                      child: _buildWalletEthBalanceRow(
-                        context,
-                        image: ImageConstant.imgBinanceCoinBnb,
-                        text: "BNB",
-                        text1: "0",
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 60.v),
-                  GestureDetector(
+children: [
+  StreamBuilder<QuerySnapshot<Object?>>(
+    stream: walletStreaming, // Gọi stream
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return CircularProgressIndicator();
+      } else if (snapshot.hasError) {
+        return Text("Lỗi: ${snapshot.error}");
+      } else if (snapshot.hasData) {
+        String stringData = (snapshot.data?.docs[0].data() as Map<String, dynamic>)['numOfCoin'];
+        double data = getConvertCoin(int.parse(stringData));
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BnbScreen()),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.only(right: 18.h),
+            child: _buildWalletEthBalanceRow(
+              context,
+              image: ImageConstant.imgBinanceCoinBnb,
+              text: "BNB",
+              text1: '${data}',
+            ),
+          ),
+        );
+      } else {
+        return Text("0 BSC");
+      }
+    },
+  ),
+            SizedBox(height: 60.v),
+                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -282,11 +362,12 @@ class _WalletPageState extends State<WalletPage> {
                         context,
                         image: ImageConstant.imgEthereumSvgrepoCom,
                         text: "ETH",
-                        text1: "0",
+                        text1: '0',
                       ),
                     ),
                   ),
-                ],
+          ],
+
               ),
             ),
           ),

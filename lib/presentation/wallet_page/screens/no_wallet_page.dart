@@ -1,3 +1,4 @@
+import 'package:application/presentation/wallet_page/screens/import_phrase_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +62,13 @@ class NoWalletPage extends StatelessWidget {
               ),
               SizedBox(height: 15),
               FractionallySizedBox(
-                widthFactor: 0.9,
+                widthFactor: 0.9, 
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => VerifyPhrasePage()));
+                            builder: (context) => ImportPharsePage()));
                   },
                   child: Text(
                     'Import a wallet using Seed Phrase',

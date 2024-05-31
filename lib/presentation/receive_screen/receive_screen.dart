@@ -1,4 +1,7 @@
+import 'package:application/core/utils/prefrence_variable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/app_bar/appbar_leading_iconbutton.dart';
@@ -6,17 +9,38 @@ import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart'; // ignore_for_file: must_be_immutable
 
-class ReceiveScreen extends StatelessWidget {
-  ReceiveScreen({Key? key})
+class ReceiveScreen extends StatefulWidget {
+  ReceiveScreen({Key? key, this.address})
       : super(
           key: key,
         );
-  TextEditingController addressoneController = TextEditingController();
+  String? address;
 
+  @override
+  State<ReceiveScreen> createState() => _ReceiveScreenState();
+}
+
+class _ReceiveScreenState extends State<ReceiveScreen> {
+  TextEditingController addressoneController = TextEditingController();
+  String? address;
+  @override 
+  void initState(){
+    super.initState();
+    getAddress();
+  }
+  Future<void> getAddress() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+    address = preferences.getString(PreferenceVariable.WALLET_ADDRESS);
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: address== null ? Center(
+              child: CircularProgressIndicator(),
+            ) : Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: SingleChildScrollView(
@@ -50,7 +74,7 @@ class ReceiveScreen extends StatelessWidget {
                 CustomElevatedButton(
                   height: 29.v,
                   width: 102.h,
-                  text: "ETH",
+                  text: "BNB",
                   buttonStyle: CustomButtonStyles.fillBlueGrayTL12,
                   buttonTextStyle:
                       CustomTextStyles.titleSmallOnSecondaryContainer,
@@ -58,13 +82,19 @@ class ReceiveScreen extends StatelessWidget {
                 SizedBox(height: 34.v),
                 CustomTextFormField(
                   controller: addressoneController,
-                  hintText: "13Ghuiasfj914Xi18i258Iyuegweg25235wgej",
+                  hintText: widget.address != null ? widget.address: "13Ghuiasfj914Xi18i258Iyuegweg25235wgej",
                   textInputAction: TextInputAction.done,
                 ),
                 SizedBox(height: 34.v), // Adjusted spacing
                 CustomElevatedButton(
                   width: 199.h,
                   text: "Copy Address",
+                  onPressed: () {
+                    if(widget.address !=null){
+                    Clipboard.setData(
+                              ClipboardData(text: widget.address!));
+                    }
+                  },
                 ),
                 SizedBox(height: 34.v), // Adjusted spacing
                 TextButton(

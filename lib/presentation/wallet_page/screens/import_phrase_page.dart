@@ -1,63 +1,47 @@
 import 'package:application/core/utils/prefrence_variable.dart';
 import 'package:application/presentation/wallet_page/screens/passcode_page.dart';
+import 'package:application/presentation/wallet_page/wallet_page.dart';
 import 'package:application/provider/wallet_provider.dart';
 import 'package:application/service/auth_service.dart';
 import 'package:application/service/private_key.dart';
 import 'package:application/service/wallet_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web3dart/web3dart.dart';
 
-class VerifyPhrasePage extends StatefulWidget {
-  final List<String> correctSeedPhrase;
-  const VerifyPhrasePage({Key? key, required this.correctSeedPhrase}) : super(key: key);
-
+class ImportPharsePage extends StatefulWidget {
+  const ImportPharsePage({Key? key}) : super(key: key);
   @override
-  _VerifyPhrasePageState createState() => _VerifyPhrasePageState();
+  _ImportPharsePageState createState() => _ImportPharsePageState();
 }
 
-class _VerifyPhrasePageState extends State<VerifyPhrasePage> {
+class _ImportPharsePageState extends State<ImportPharsePage> {
   final TextEditingController _phraseController = TextEditingController();
   String? errorMessage;
   final WalletService walletService = WalletService();
   final PrivateKeyService privateKeyService = PrivateKeyService();
-  Future<void> _verifyPhrase()async {
-    try{
-    List<String> inputPhrase = _phraseController.text.trim().split(' ');
 
-    if (inputPhrase.length != widget.correctSeedPhrase.length) {
-      setState(() {
-        errorMessage =
-            'Seed phrase must contain ${widget.correctSeedPhrase.length} words.';
-      });
-    } else if (inputPhrase.join(' ') == widget.correctSeedPhrase.join(' ')) {
-      setState(() {
-        errorMessage = null;
-      });
-      final WalletProvider walletProvider = WalletProvider();
+  void _verifyPhrase() async {
+      final walletProvider =
+      Provider.of<WalletProvider>(context, listen: false);
+      // Call the getPrivateKey function from the WalletProvider
       final privateKey = await walletProvider.getPrivateKey(_phraseController.text.trim());
       EthereumAddress address = await walletProvider.getPublicKey(privateKey);
       await walletService.createNewWallet(address.hex, AuthService.user!.uid, 'bsc');
       await privateKeyService.addNewPrivateKey(privateKey, address.hex);
+      if(privateKey!=null && address!=null)
+      setState(() {
+        errorMessage = null;
+      });
       SharedPreferences preference = await SharedPreferences.getInstance();
       preference.setString(PreferenceVariable.WALLET_ADDRESS, address.hex);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Seed phrase verified successfully!')),
       );
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PasscodePage()));
-    } else {
-      setState(() {
-        errorMessage = 'The seed phrase is incorrect. Please try again.';
-      });
-    }
-    }
-    catch(e){
-      var logger = Logger();
-      logger.e(e.toString());
-    }
+          context, MaterialPageRoute(builder: (context) => WalletPage()));
   }
 
   @override
