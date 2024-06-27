@@ -7,7 +7,11 @@ class ImageConstant {
 // On Boarding images
   static String imgEllipse1 = '$imagePath/img_ellipse_1.png';
 // Home - Container images
+//img_binance_coin.svg
+  static String imgEllipse = '$imagePath/img_ellipse.png';
+  static String imgBinanceCoin = '$imagePath/img_binance_coin.svg';
   static String imgSearch = '$imagePath/img_search.svg';
+  static String imgShoe = '$imagePath/img_shoe.png';
   static String imgRectangle9 = '$imagePath/img_rectangle_9.png';
   static String imgRectangle12 = '$imagePath/img_rectangle_12.png';
   static String imgRectangle13 = '$imagePath/img_rectangle_13.png';

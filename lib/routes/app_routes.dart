@@ -4,6 +4,7 @@ import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/bnb_screen/bnb_screen.dart';
 import '../presentation/eth_screen/eth_screen.dart';
 import '../presentation/home_container_screen/home_container_screen.dart';
+import '../presentation/home_screen/home_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
 import '../presentation/wallet_page/wallet_page.dart';
 import '../presentation/on_boarding_screen/on_boarding_screen.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String receiveScreen = '/receive_screen';
   static const String onBoardingScreen = '/on_boarding_screen';
   static const String homePage = '/home_page';
+  static const String homeScreen = '/home_screen';
   static const String homeContainerScreen = '/home_container_screen';
   static const String walletPage = '/wallet_page';
   static const String bnbScreen = '/bnb_screen';
@@ -32,6 +34,7 @@ class AppRoutes {
     loginScreen: (context) => LoginScreen(),
     onBoardingScreen: (context) => OnBoardingScreen(),
     homeContainerScreen: (context) => HomeContainerScreen(),
+    homeScreen: (context) => HomeScreen(),
     bnbScreen: (context) => BnbScreen(),
     ethScreen: (context) => EthScreen(),
     walletPage: (context) => WalletPage(),

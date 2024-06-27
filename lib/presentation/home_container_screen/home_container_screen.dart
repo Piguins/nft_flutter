@@ -1,4 +1,5 @@
 import 'package:application/presentation/account_page/account_page.dart';
+import 'package:application/presentation/home_screen/home_screen.dart';
 import 'package:application/presentation/wallet_page/wallet_page.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
@@ -61,7 +62,7 @@ class HomeContainerScreen extends StatelessWidget {
   Widget getCurrentPage(String currentRoute) {
     switch (currentRoute) {
       case AppRoutes.homePage:
-        return HomePage();
+        return HomeScreen();
       case AppRoutes.walletPage:
         return WalletPage();
       case AppRoutes.accountPage:
