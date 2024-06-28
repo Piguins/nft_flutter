@@ -1,11 +1,17 @@
+import 'dart:collection';
+
 import 'package:application/core/utils/image_constant.dart';
 import 'package:application/core/utils/size_utils.dart';
+import 'package:application/model/marketplace.dart';
 import 'package:application/presentation/home_screen/ItemCard.dart';
 import 'package:application/presentation/home_screen/ItemDetailPopup.dart';
+import 'package:application/service/marketplace_service.dart';
+import 'package:application/service/nft_service.dart';
 import 'package:application/theme/theme_helper.dart';
 import 'package:application/widgets/custom_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,15 +21,69 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late NFTService nftService ;
+  late MarketplaceService marketplaceService;
+  late List<HashMap<String,dynamic>> data;
+  bool isLoading = false;
+  @override 
+  void initState(){
+    super.initState();
+   nftService = NFTService();
+   marketplaceService = MarketplaceService();
+   getNFTMarketplace();
+  }
+  Future<void> getNFTMarketplace() async{
+    nftService.getNFTInMarketplacce();
+    try{
+      dynamic dataGet = await nftService.getNFTInMarketplacce();
+      HashMap<String,dynamic> dataTemp = convertToHashMap(dataGet);
+       data = convertToListOfHashMaps(dataTemp["data"]);
+    }
+    catch(e){
+      print('Error: $e');
+    }
+    finally{
+      setState(() {
+        isLoading = true;
+      });
+    }
+  }
+    List<HashMap<String, dynamic>> convertToListOfHashMaps(dynamic input) {
+    if (input is List) {
+      return input.map((item) {
+        if (item is Map<String, dynamic>) {
+          return HashMap<String, dynamic>.from(item);
+        } else {
+          throw Exception('Item is not a Map<String, dynamic>: $item');
+        }
+      }).toList();
+    } else {
+      throw Exception('Input is not a List');
+    }
+  }
+  HashMap<String, dynamic> convertToHashMap(dynamic input) {
+    if (input is Map<String, dynamic>) {
+      return HashMap<String, dynamic>.from(input);
+    } else {
+      throw Exception('Input is not a Map<String, dynamic>');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      
+      child:
+       !isLoading 
+              ? Center(
+                  child: CircularProgressIndicator(),
+                ):
+       Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Container(
             width: double.maxFinite,
-            child: Column(
+            child:
+                 Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,12 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisSpacing: 15.0,
                       childAspectRatio: 0.85,
                     ),
-                    itemCount: 10,
+                    itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Itemcard(
                           id: index.toString(),
-                          imagePath: ImageConstant.imgShoe,
-                          price: ((index + 1) * 1000).toString(),
+                          imagePath: data[index]["image"] ?? ImageConstant.imgShoe,
+                          price: (data[index]["price"] / 1000000000000000000).toString(),
                           onTap: (id) {
                             // Show popup with item details
                             showDialog(
@@ -71,9 +131,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return ItemDetailPopup(
                                     id: id,
                                     imagePath: ImageConstant.imgShoe,
-                                    price: ((index + 1) * 1000).toString(),
-                                    onTap: (id) {
+                                    price: (data[index]["price"] / 1000000000000000000).toString(),
+                                    onTap: (id) async{
                                       // Do something
+                                      try{
+                                        Marketplace marketplace = Marketplace(chain: 'bsc', isSold: false, nftAddress: data[index]["tokenAddress"],
+                                         price: data[index]["price"].toString(), seller: data[index]["seller"],itemId: data[index]["itemId"], tokenId: int.parse(data[index]["tokenId"]),marketplaceId: data[index]["marketplaceId"]);
+                                        await marketplaceService.PurchaseItem(marketplace);
+                                        await getNFTMarketplace();
+                                          Fluttertoast.showToast(
+                                            msg: "Buy NFT Success",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Color.fromARGB(255, 47, 242, 76),
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                        setState(() {
+                                          
+                                        });
+                                      }
+                                      catch(e){
+                                        Fluttertoast.showToast(
+                                            msg: e.toString(),
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                      }
                                     },
                                   );
                                 });

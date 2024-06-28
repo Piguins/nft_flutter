@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:application/core/utils/image_constant.dart';
 import 'package:application/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ItemDetailPopup extends StatelessWidget {
@@ -105,7 +106,8 @@ class ItemDetailPopup extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await onTap(id);
                         Navigator.pop(context);
                       },
                       child: Padding(

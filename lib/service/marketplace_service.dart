@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:application/core/network/RequestAPI.dart';
+import 'package:application/core/utils/prefrence_variable.dart';
 import 'package:application/model/marketplace.dart';
 import 'package:application/service/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +30,14 @@ class MarketplaceService{
           return jsonDataRes; 
       }
       else{
-        throw Exception("Make item in marketplace failed");
+        final jsonDataRes = jsonDecode(respone.body);
+        if(jsonDataRes["error"] == "not have enough coin")
+        {
+          throw Exception("Not have enough coin");
+        }
+        else{
+          throw Exception("Make item in marketplace failed");
+        }
       }
     }
     else{
@@ -42,7 +50,8 @@ class MarketplaceService{
       SharedPreferences preference = await SharedPreferences.getInstance();
       Map<String, dynamic> data = marketplace.toJson();
       data["accountId"] = AuthService.user!.uid;
-      data["walletAddress"] = preference.getString("walletAddress");
+      print("walletAddres: ${preference.getString(PreferenceVariable.WALLET_ADDRESS)}");
+      data["walletAddress"] = preference.getString(PreferenceVariable.WALLET_ADDRESS);
       data["chain"] = preference.getString("chain");
       var jsonData = jsonEncode(data);
       var respone = await http.post(Uri.parse(API_URL+"/api/marketplace/purchase-item")
