@@ -18,6 +18,7 @@ class Itemcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     bool isNetworkImage = imagePath.startsWith('http://') || imagePath.startsWith('https://');
     return Card(
       color: ColorSchemes.lightCodeColorScheme.primaryContainer,
       child: Column(
@@ -31,10 +32,29 @@ class Itemcard extends StatelessWidget {
                   ImageConstant.imgEllipse,
                   fit: BoxFit.cover,
                 ),
-                Image.asset(
+                !isNetworkImage ? Image.asset(
                   imagePath,
                   fit: BoxFit.cover,
-                )
+                ):Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                      ),
+                    );
+                  }
+                },
+                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  return Text('Failed to load image');
+                },
+              )
               ],
             ),
           ),

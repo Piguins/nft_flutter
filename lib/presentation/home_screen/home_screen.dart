@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return Itemcard(
                           id: index.toString(),
-                          imagePath: data[index]["image"] ?? ImageConstant.imgShoe,
+                          imagePath: data[index]["image"] ?? ImageConstant.imageNoImage,
                           price: (data[index]["price"] / 1000000000000000000).toString(),
                           onTap: (id) {
                             // Show popup with item details
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (context) {
                                   return ItemDetailPopup(
                                     id: id,
-                                    imagePath: ImageConstant.imgShoe,
+                                    imagePath: data[index]["image"] ?? ImageConstant.imageNoImage,
                                     price: (data[index]["price"] / 1000000000000000000).toString(),
                                     onTap: (id) async{
                                       // Do something

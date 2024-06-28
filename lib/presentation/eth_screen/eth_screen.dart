@@ -1,40 +1,67 @@
 import 'package:application/presentation/receive_screen/receive_screen.dart';
 import 'package:application/presentation/transfer_screen/transfer_screen.dart';
+import 'package:application/widgets/empty_record.dart';
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import '../../model/history_transaction.dart';
 import '../../widgets/custom_icon_button.dart';
+import '../../widgets/transaction_record.dart';
 
 class EthScreen extends StatelessWidget {
-  const EthScreen({Key? key})
-      : super(
-          key: key,
-        );
+  EthScreen({Key? key}) : super(key: key);
+  final List<HistoryTransaction> historyTransaction = [
+    HistoryTransaction(
+      id: "1",
+      address: "0x1234567890",
+      tokenID: "1234567890",
+      sellerName: "Seller 1",
+    ),
+    HistoryTransaction(
+      id: "2",
+      address: "0x1234567890",
+      tokenID: "1234567890",
+      sellerName: "Seller 2",
+    ),
+    HistoryTransaction(
+      id: "3",
+      address: "0x1234567890",
+      tokenID: "1234567890",
+      sellerName: "Seller 3",
+    ),
+    HistoryTransaction(
+      id: "4",
+      address: "0x1234567890",
+      tokenID: "1234567890",
+      sellerName: "Seller 4",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SizedBox(
-          width: double.maxFinite,
-          child: Column(
-            children: [
-              _buildWalletActionsColumn(context),
-              Spacer(
-                flex: 31,
-              ),
-              CustomImageView(
-                imagePath: ImageConstant.imgBoxSvgrepoCom,
-                height: 50.adaptSize,
-                width: 50.adaptSize,
-              ),
-              SizedBox(height: 28.v),
-              Text(
-                "No transaction record",
-                style: CustomTextStyles.titleSmallBluegray90002,
-              ),
-              Spacer(
-                flex: 68,
-              )
-            ],
+        body: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: Column(
+              children: [
+                _buildWalletActionsColumn(context),
+                Visibility(
+                    visible: historyTransaction.isEmpty, child: EmptyRecord()),
+                ...historyTransaction
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TransactionRecord(
+                          historyTransaction: e,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ],
+            ),
           ),
         ),
       ),
@@ -138,9 +165,7 @@ class EthScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                Spacer(
-                  flex: 53,
-                ),
+                Spacer(flex: 53),
                 Padding(
                   padding: EdgeInsets.only(bottom: 2.v),
                   child: Column(
@@ -169,9 +194,7 @@ class EthScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(
-                  flex: 46,
-                ),
+                Spacer(flex: 46),
                 Column(
                   children: [
                     CustomIconButton(

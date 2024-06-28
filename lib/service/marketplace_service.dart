@@ -20,7 +20,7 @@ class MarketplaceService{
       SharedPreferences preference = await SharedPreferences.getInstance();
       Map<String, dynamic> data = marketplace.toJson();
       data["accountId"] = AuthService.user!.uid;
-      data["walletAddress"] = preference.getString("walletAddress");
+      data["walletAddress"] = preference.getString(PreferenceVariable.WALLET_ADDRESS);
       data["chain"] = preference.getString("chain");
       var jsonData = jsonEncode(data);
       var respone = await http.post(Uri.parse(API_URL+"/api/marketplace/make-item")
@@ -66,6 +66,22 @@ class MarketplaceService{
     }
     else{
           throw Exception("Not login yet");
+    }
+  }
+  Future<dynamic> getHistory(String address) async{
+    try{
+      var respone = await http.get(Uri.parse(API_URL+"/api/marketplace/history/$address")
+      , headers: {'Content-Type': 'application/json'});
+      if(respone.statusCode == 200){
+          final jsonDataRes = jsonDecode(respone.body);
+          return jsonDataRes; 
+      }
+      else{
+        throw Exception("Get item in marketplace failed");
+      }
+    }
+    catch(e){
+      throw Exception(e);
     }
   }
 }
