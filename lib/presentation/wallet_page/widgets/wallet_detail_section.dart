@@ -16,7 +16,6 @@ class WalletDetailSection extends StatelessWidget {
   Stream<QuerySnapshot<Object?>> walletStreaming;
   WalletDetailSection({Key? key, this.addressText, required this.walletStreaming, this.address}) : super(key: key);
   final List<String> dropdownItemList = [
-    "ETH",
     "BNB",
   ];
     double getConvertCoin(int input) {
@@ -48,7 +47,7 @@ class WalletDetailSection extends StatelessWidget {
                 width: 18.adaptSize,
               ),
             ),
-            hintText: "ETH",
+            hintText: "BNB",
             contentPadding: EdgeInsets.only(left: 25.0),
             items: dropdownItemList,
           ),
@@ -67,7 +66,7 @@ class WalletDetailSection extends StatelessWidget {
                   as Map<String, dynamic>)['numOfCoin'];
               double data = getConvertCoin(int.parse(stringData));
               return Text(
-                "${data} BSC",
+                "${data} BNB",
                 style: CustomTextStyles.bodyMediumPrimary,
               );
             } else {
