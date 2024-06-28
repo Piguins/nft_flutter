@@ -126,7 +126,7 @@ class BnbScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Text(
-              "0 ETH",
+              "0 BNB",
               style: CustomTextStyles.bodyMediumPrimary,
               textAlign: TextAlign.right,
             ),
