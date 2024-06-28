@@ -39,47 +39,46 @@ class _WalletPageState extends State<WalletPage> {
     "BNB",
   ];
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
-  Future<void> getBalanceWallet() async{
 
-  }
+  Future<void> getBalanceWallet() async {}
   late SharedPreferences preferences;
   String? address;
   String? addressText;
-  Future<void> getAddress() async{
+  Future<void> getAddress() async {
     preferences = await SharedPreferences.getInstance();
-    address = truncateWithEllipsis(preferences.getString(PreferenceVariable.WALLET_ADDRESS)!,10);
-    
+    address =
+        "truncateWithEllipsis(preferences.getString(PreferenceVariable.WALLET_ADDRESS)!,10)";
   }
-  var walletStreaming = WalletService().getStreamAuctionById(AuthService.user!.uid, 'bsc');
+
+  // var walletStreaming =
+  //     WalletService().getStreamAuctionById(AuthService.user!.uid, 'bsc');
   String truncateWithEllipsis(String text, int maxLength) {
-  if (text.length <= maxLength) {
-    return text;
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substring(0, maxLength) + '...';
   }
-  return text.substring(0, maxLength) + '...';
-}
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder<bool>(future: () async {
-          try{
-          preferences = await SharedPreferences.getInstance();
-          address = preferences.getString(PreferenceVariable.WALLET_ADDRESS);
-          if(address !=null)
-          {
-            addressText = truncateWithEllipsis(address!,10);
-            WalletService walletService = WalletService();
-            walletService.getBalanceWallet(address!, 'bsc');
-          }
-          }
-          catch(e){
+          try {
+            preferences = await SharedPreferences.getInstance();
+            address = preferences.getString(PreferenceVariable.WALLET_ADDRESS);
+            if (address != null) {
+              addressText = truncateWithEllipsis(address!, 10);
+              WalletService walletService = WalletService();
+              walletService.getBalanceWallet(address!, 'bsc');
+            }
+          } catch (e) {
             print(e);
           }
-          return  address !=null;
+          return address != null;
         }(), builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -91,9 +90,9 @@ class _WalletPageState extends State<WalletPage> {
             );
           }
           bool data = snapshot.data!;
-          if (!data) {
-            return NoWalletPage();
-          }
+          // if (!data) {
+          //   return NoWalletPage();
+          // }
           return Container(
             width: double.maxFinite,
             decoration: AppDecoration.fillOnPrimary,
@@ -143,14 +142,15 @@ class _WalletPageState extends State<WalletPage> {
       ),
     );
   }
-    double getConvertCoin(int input) {
-      double result = input / 1e18;
-      String resultString = result.toStringAsFixed(5);
-      return double.parse(resultString);
-    }
+
+  double getConvertCoin(int input) {
+    double result = input / 1e18;
+    String resultString = result.toStringAsFixed(5);
+    return double.parse(resultString);
+  }
+
   /// Section Widget
   Widget _buildWalletDetailsSection(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 56.h,
@@ -178,30 +178,38 @@ class _WalletPageState extends State<WalletPage> {
             items: dropdownItemList,
           ),
           SizedBox(height: 28.v),
-          StreamBuilder<QuerySnapshot<Object?>>(
-                stream: walletStreaming, // Gọi stream
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Loading...");
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else if (snapshot.hasData) {
-                    String stringData = (snapshot.data?.docs[0].data()as Map<String,dynamic>)['numOfCoin'];
-                    double data = getConvertCoin( int.parse(stringData));
-                    return Text(
-                      "${data} BSC",
-                      style: CustomTextStyles.bodyMediumPrimary,
-                    );
-                  } else {
-                    return Text("0 BSC");
-                  }
-                },
-              ),
+          // Uncomment and modify this section to use StreamBuilder
+          /*
+        StreamBuilder<QuerySnapshot<Object?>>(
+          stream: walletStreaming, // Gọi stream
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading...");
+            } else if (snapshot.hasError) {
+              return Text("Error: ${snapshot.error}");
+            } else if (snapshot.hasData) {
+              String stringData = (snapshot.data?.docs[0].data()
+                  as Map<String, dynamic>)['numOfCoin'];
+              double data = getConvertCoin(int.parse(stringData));
+              return Text(
+                "${data} BSC",
+                style: CustomTextStyles.bodyMediumPrimary,
+              );
+            } else {
+              return Text("0 BSC");
+            }
+          },
+        ),
+        */
+          Text(
+            "0 BSC", // Replace this with the actual data if needed
+            style: CustomTextStyles.bodyMediumPrimary,
+          ),
           SizedBox(height: 24.v),
           CustomElevatedButton(
             height: 45.v,
             width: 171.h,
-            text: addressText?? '0x12321321',
+            text: addressText ?? '0x12321321',
             buttonStyle: CustomButtonStyles.fillBlueGray,
             buttonTextStyle: theme.textTheme.bodyMedium!,
           ),
@@ -224,7 +232,9 @@ class _WalletPageState extends State<WalletPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ReceiveScreen(address: address,)),
+                                builder: (context) => ReceiveScreen(
+                                      address: address,
+                                    )),
                           );
                         },
                         child: CustomImageView(
@@ -250,10 +260,10 @@ class _WalletPageState extends State<WalletPage> {
                         decoration: IconButtonStyleHelper.fillIndigo,
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                              context,
+                              MaterialPageRoute(
                                 builder: (context) => TransferScreen(),
-                          ));
+                              ));
                         },
                         child: CustomImageView(
                           imagePath: ImageConstant.imgMoneySendSvgrepoCom,
@@ -315,41 +325,60 @@ class _WalletPageState extends State<WalletPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-children: [
-  StreamBuilder<QuerySnapshot<Object?>>(
-    stream: walletStreaming, // Gọi stream
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return Text("Lỗi: ${snapshot.error}");
-      } else if (snapshot.hasData) {
-        String stringData = (snapshot.data?.docs[0].data() as Map<String, dynamic>)['numOfCoin'];
-        double data = getConvertCoin(int.parse(stringData));
-        return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BnbScreen()),
-            );
-          },
-          child: Padding(
-            padding: EdgeInsets.only(right: 18.h),
-            child: _buildWalletEthBalanceRow(
-              context,
-              image: ImageConstant.imgBinanceCoinBnb,
-              text: "BNB",
-              text1: '${data}',
-            ),
-          ),
-        );
-      } else {
-        return Text("0 BSC");
-      }
-    },
-  ),
-            SizedBox(height: 60.v),
-                   GestureDetector(
+                children: [
+                  // StreamBuilder<QuerySnapshot<Object?>>(
+                  //   stream: walletStreaming, // Gọi stream
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       return CircularProgressIndicator();
+                  //     } else if (snapshot.hasError) {
+                  //       return Text("Lỗi: ${snapshot.error}");
+                  //     } else if (snapshot.hasData) {
+                  //       String stringData = (snapshot.data?.docs[0].data()
+                  //           as Map<String, dynamic>)['numOfCoin'];
+                  //       double data = getConvertCoin(int.parse(stringData));
+                  //       return GestureDetector(
+                  //         onTap: () {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => BnbScreen()),
+                  //           );
+                  //         },
+                  //         child: Padding(
+                  //           padding: EdgeInsets.only(right: 18.h),
+                  //           child: _buildWalletEthBalanceRow(
+                  //             context,
+                  //             image: ImageConstant.imgBinanceCoinBnb,
+                  //             text: "BNB",
+                  //             text1: '${data}',
+                  //           ),
+                  //         ),
+                  //       );
+                  //     } else {
+                  //       return Text("0 BSC");
+                  //     }
+                  //   },
+                  // )
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BnbScreen()),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 18.h),
+                      child: _buildWalletEthBalanceRow(
+                        context,
+                        image: ImageConstant.imgBinanceCoinBnb,
+                        text: "BNB",
+                        text1: '${5}',
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 60.v),
+                  GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -366,8 +395,7 @@ children: [
                       ),
                     ),
                   ),
-          ],
-
+                ],
               ),
             ),
           ),
