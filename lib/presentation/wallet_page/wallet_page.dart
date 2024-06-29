@@ -228,6 +228,7 @@ class _WalletPageState extends State<WalletPage> {
                                               Marketplace marketplace = Marketplace(chain: "bsc", isSold: false, nftAddress: address, price: (double.parse(price) * 1e18).toInt().toString(), seller: this.address, tokenId: int.parse(id), marketplaceId: null);
                                               //print("marketplace ${marketplace1.toJson()}");
                                              await marketplaceService.MakeAnItemInMarketplace(marketplace);
+                                        await getNFTMarketplace();
                                                               Fluttertoast.showToast(
                                             msg: "Sell NFT Success",
                                             toastLength: Toast.LENGTH_SHORT,
