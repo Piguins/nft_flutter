@@ -10,17 +10,24 @@ class OrderItemSellDialog extends StatelessWidget {
   final String id;
   final String imagePath;
   final String address;
-  final Function(String) onTap;
+  final String addressText;
+
+  final Function(String, String,String) onTap;
+  TextEditingController controller = TextEditingController();
   OrderItemSellDialog({
     Key? key,
     required this.id,
     required this.imagePath,
     required this.address,
+    required this.addressText,
+
     required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+     bool isNetworkImage = imagePath.startsWith('http://') || imagePath.startsWith('https://');
+
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -39,11 +46,31 @@ class OrderItemSellDialog extends StatelessWidget {
                       fit: BoxFit.cover,
                       height: 150,
                     ),
-                    Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
-                      height: 200,
-                    )
+                       !isNetworkImage? Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    height: 200,
+                  ):Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  height: 200,
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return Text('Failed to load image');
+                  },
+                )
                   ],
                 ),
               ),
@@ -59,7 +86,7 @@ class OrderItemSellDialog extends StatelessWidget {
                     SizedBox(height: 10),
                     TextRow(
                       text1: "Address: ",
-                      text2: address,
+                      text2: addressText,
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -73,10 +100,10 @@ class OrderItemSellDialog extends StatelessWidget {
                     SizedBox(height: 10),
                     Row(
                       children: [
-                        Expanded(child: AmountInput()),
+                        Expanded(child: AmountInput(controller: controller,)),
                         SvgPicture.asset(
                           ImageConstant.imgBinanceCoin,
-                          height: 30,
+                          height: 25,
                         ),
                       ],
                     ),
@@ -107,7 +134,8 @@ class OrderItemSellDialog extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: ()async {
+                        await onTap(id,address,controller.text);
                         Navigator.pop(context);
                       },
                       child: Padding(

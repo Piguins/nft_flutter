@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:application/core/utils/image_constant.dart';
 import 'package:application/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ItemDetailPopup extends StatelessWidget {
@@ -20,6 +21,7 @@ class ItemDetailPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     bool isNetworkImage = imagePath.startsWith('http://') || imagePath.startsWith('https://');
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -38,11 +40,30 @@ class ItemDetailPopup extends StatelessWidget {
                       fit: BoxFit.cover,
                       height: 150,
                     ),
-                    Image.asset(
+                    !isNetworkImage ? Image.asset(
                       imagePath,
                       fit: BoxFit.cover,
                       height: 200,
-                    )
+                    ): Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                      ),
+                    );
+                  }
+                },
+                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                  return Text('Failed to load image');
+                },
+              )
                   ],
                 ),
               ),
@@ -105,12 +126,13 @@ class ItemDetailPopup extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await onTap(id);
                         Navigator.pop(context);
                       },
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 37, vertical: 10),
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                         child: Text(
                           "Confirm",
                           style: TextStyle(color: Colors.white),

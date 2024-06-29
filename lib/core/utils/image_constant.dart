@@ -2,6 +2,8 @@
 class ImageConstant {
   // Image folder path
   static String imagePath = 'assets/images';
+  static String imageNoImage = '$imagePath/img_no_image.jpg';
+
 // Login images
   static String imgGoogleicon1 = '$imagePath/img_googleicon_1.svg';
 // On Boarding images

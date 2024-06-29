@@ -35,7 +35,7 @@ class AppRoutes {
     onBoardingScreen: (context) => OnBoardingScreen(),
     homeContainerScreen: (context) => HomeContainerScreen(),
     homeScreen: (context) => HomeScreen(),
-    bnbScreen: (context) => BnbScreen(),
+    bnbScreen: (context) => BnbScreen(coin: "0",),
     ethScreen: (context) => EthScreen(),
     walletPage: (context) => WalletPage(),
     receiveScreen: (context) => ReceiveScreen(),

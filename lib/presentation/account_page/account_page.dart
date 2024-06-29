@@ -1,4 +1,6 @@
+import 'package:application/service/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../core/app_export.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_icon_button.dart'; // ignore_for_file: must_be_immutable
@@ -20,7 +22,7 @@ class AccountPage extends StatelessWidget {
           child: Column(
             children: [
               CustomImageView(
-                imagePath: ImageConstant.imgEllipse10,
+                imagePath: AuthService.user!.photoURL ?? ImageConstant.imgEllipse10,
                 height: 90.adaptSize,
                 width: 90.adaptSize,
                 radius: BorderRadius.circular(
@@ -29,7 +31,7 @@ class AccountPage extends StatelessWidget {
               ),
               SizedBox(height: 25.v),
               Text(
-                "Mohamet Salah",
+                AuthService.user!.displayName!,
                 style: CustomTextStyles.titleSmallOnPrimaryContainer15,
               ),
               SizedBox(height: 24.v),
@@ -82,7 +84,21 @@ class AccountPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(left: 51.h),
-                  child: Row(
+                  child: InkWell(
+            onTap: ()async {
+              // Xử lý sự kiện nhấn nút ở đây
+              await AuthService.logout();
+            Fluttertoast.showToast(
+              msg: "Logout Success",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Color.fromARGB(255, 47, 242, 76),
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+            }, child: 
+                  Row(
                     children: [
                       CustomIconButton(
                         height: 35.adaptSize,
@@ -106,7 +122,7 @@ class AccountPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+              ),),
               SizedBox(height: 5.v)
             ],
           ),

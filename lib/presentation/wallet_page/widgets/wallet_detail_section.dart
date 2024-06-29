@@ -1,4 +1,5 @@
 import 'package:application/core/app_export.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/custom_button_style.dart';
@@ -10,11 +11,18 @@ import '../../transfer_screen/transfer_screen.dart';
 
 class WalletDetailSection extends StatelessWidget {
   final String? addressText;
-  WalletDetailSection({Key? key, this.addressText}) : super(key: key);
+  final String? address;
+
+  Stream<QuerySnapshot<Object?>> walletStreaming;
+  WalletDetailSection({Key? key, this.addressText, required this.walletStreaming, this.address}) : super(key: key);
   final List<String> dropdownItemList = [
-    "ETH",
     "BNB",
   ];
+    double getConvertCoin(int input) {
+    double result = input / 1e18;
+    String resultString = result.toStringAsFixed(5);
+    return double.parse(resultString);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,13 +47,13 @@ class WalletDetailSection extends StatelessWidget {
                 width: 18.adaptSize,
               ),
             ),
-            hintText: "ETH",
+            hintText: "BNB",
             contentPadding: EdgeInsets.only(left: 25.0),
             items: dropdownItemList,
           ),
           SizedBox(height: 28.v),
           // Uncomment and modify this section to use StreamBuilder
-          /*
+          
         StreamBuilder<QuerySnapshot<Object?>>(
           stream: walletStreaming, // Gọi stream
           builder: (context, snapshot) {
@@ -58,7 +66,7 @@ class WalletDetailSection extends StatelessWidget {
                   as Map<String, dynamic>)['numOfCoin'];
               double data = getConvertCoin(int.parse(stringData));
               return Text(
-                "${data} BSC",
+                "${data} BNB",
                 style: CustomTextStyles.bodyMediumPrimary,
               );
             } else {
@@ -66,11 +74,8 @@ class WalletDetailSection extends StatelessWidget {
             }
           },
         ),
-        */
-          Text(
-            "0 BSC", // Replace this with the actual data if needed
-            style: CustomTextStyles.bodyMediumPrimary,
-          ),
+        
+
           SizedBox(height: 24.v),
           CustomElevatedButton(
             height: 45.v,
@@ -99,7 +104,7 @@ class WalletDetailSection extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ReceiveScreen(
-                                      address: this.addressText,
+                                      address: this.address,
                                     )),
                           );
                         },

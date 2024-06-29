@@ -1,41 +1,61 @@
+import 'dart:collection';
+
+import 'package:application/core/utils/prefrence_variable.dart';
+import 'package:application/model/marketplace.dart';
 import 'package:application/presentation/receive_screen/receive_screen.dart';
 import 'package:application/presentation/transfer_screen/transfer_screen.dart';
+import 'package:application/service/marketplace_service.dart';
 import 'package:application/widgets/empty_record.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../../model/history_transaction.dart';
 import '../../widgets/custom_icon_button.dart';
 import '../../widgets/transaction_record.dart';
 
-class BnbScreen extends StatelessWidget {
-  BnbScreen({Key? key}) : super(key: key);
-  final List<HistoryTransaction> historyTransaction = [
-    HistoryTransaction(
-      id: "1",
-      address: "0x1234567890",
-      tokenID: "1234567890",
-      sellerName: "Seller 1",
-    ),
-    HistoryTransaction(
-      id: "2",
-      address: "0x1234567890",
-      tokenID: "1234567890",
-      sellerName: "Seller 2",
-    ),
-    HistoryTransaction(
-      id: "3",
-      address: "0x1234567890",
-      tokenID: "1234567890",
-      sellerName: "Seller 3",
-    ),
-    HistoryTransaction(
-      id: "4",
-      address: "0x1234567890",
-      tokenID: "1234567890",
-      sellerName: "Seller 4",
-    ),
-  ];
+class BnbScreen extends StatefulWidget {
+  BnbScreen({Key? key, required this.coin}) : super(key: key);
+  final String coin;
 
+  @override
+  State<BnbScreen> createState() => _BnbScreenState();
+}
+
+class _BnbScreenState extends State<BnbScreen> {
+  final List<HistoryTransaction> historyTransactions = [];
+  MarketplaceService marketplaceService = MarketplaceService();
+  @override
+  void initState(){
+    super.initState();
+    getHistory();
+  }
+  Future<void> getHistory() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var dataRes = await marketplaceService.getHistory(sharedPreferences.getString(PreferenceVariable.WALLET_ADDRESS)!);
+    print(dataRes);
+    List<HashMap<String, dynamic>> tempData = convertToListOfHashMaps(dataRes);
+    for(int i =0 ;i<tempData.length;i++){
+      HashMap<String, dynamic> item = tempData[i];
+      HistoryTransaction historyTransaction = HistoryTransaction(id: item["id"], address: item["nftAddress"], tokenID: item["tokenID"], sellerName: item["seller"]);
+        historyTransactions.add(historyTransaction);
+    }
+    setState(() {
+      
+    });
+  }
+    List<HashMap<String, dynamic>> convertToListOfHashMaps(dynamic input) {
+    if (input is List) {
+      return input.map((item) {
+        if (item is Map<String, dynamic>) {
+          return HashMap<String, dynamic>.from(item);
+        } else {
+          throw Exception('Item is not a Map<String, dynamic>: $item');
+        }
+      }).toList();
+    } else {
+      throw Exception('Input is not a List');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,8 +69,8 @@ class BnbScreen extends StatelessWidget {
               children: [
                 _buildWalletActionsColumn(context),
                 Visibility(
-                    visible: historyTransaction.isEmpty, child: EmptyRecord()),
-                ...historyTransaction
+                    visible: historyTransactions.isEmpty, child: EmptyRecord()),
+                ...historyTransactions
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -126,7 +146,7 @@ class BnbScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 20.0),
             child: Text(
-              "0 BNB",
+              "${widget.coin} BNB",
               style: CustomTextStyles.bodyMediumPrimary,
               textAlign: TextAlign.right,
             ),

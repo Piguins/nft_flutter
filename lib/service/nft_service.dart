@@ -19,6 +19,22 @@ class NFTService{
       throw Exception(e);
     }
   }
+  Future<dynamic> getNFTByAddress(String address) async{
+    try{
+      var respone = await http.get(Uri.parse(API_URL+"/api/nft/$address")
+      , headers: {'Content-Type': 'application/json'});
+      if(respone.statusCode == 200){
+          final jsonDataRes = jsonDecode(respone.body);
+          return jsonDataRes; 
+      }
+      else{
+        throw Exception("Get item in marketplace failed");
+      }
+    }
+    catch(e){
+      throw Exception(e);
+    }
+  }
   Future<dynamic> postTestHello() async{
     try{
       Map<String, dynamic> data = Map();

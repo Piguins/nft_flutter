@@ -7,19 +7,25 @@ class OrderItem extends StatelessWidget {
   final String id;
   final String imagePath;
   final String address;
-  final Function(String) onTap;
+  final String addressText;
+
+  final Function(String,String,String) onTap;
   OrderItem({
     Key? key,
     required this.id,
     required this.imagePath,
     required this.address,
     required this.onTap,
+    required this.addressText,
+
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+     bool isNetworkImage = imagePath.startsWith('http://') || imagePath.startsWith('https://');
+
     return GestureDetector(
-      onTap: () => onTap(id),
+      onTap: () => onTap(id,address,imagePath),
       child: Card(
         color: ColorSchemes.lightCodeColorScheme.primaryContainer,
         child: Column(
@@ -33,10 +39,29 @@ class OrderItem extends StatelessWidget {
                     ImageConstant.imgEllipse,
                     fit: BoxFit.cover,
                   ),
-                  Image.asset(
+                  !isNetworkImage? Image.asset(
                     imagePath,
                     fit: BoxFit.cover,
-                  )
+                  ):Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return Text('Failed to load image');
+                  },
+                )
                 ],
               ),
             ),
@@ -46,7 +71,7 @@ class OrderItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Address: $address",
+                  Text("Address: $addressText",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Colors.white,

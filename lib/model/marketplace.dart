@@ -5,11 +5,13 @@ class Marketplace {
   String? buyer;
   String? chain;
   bool? isSold;
-  String? itemId;
+  int? itemId;
   String? nftAddress;
   String? price;
   String? seller;
   int? tokenId;
+  String? marketplaceId;
+
 
   Marketplace({
     this.buyer,
@@ -20,6 +22,7 @@ class Marketplace {
     required this.price,
     required this.seller,
     required this.tokenId,
+    required this.marketplaceId
   });
 
   // Constructor to create a Marketplace instance from a JSON object
@@ -28,11 +31,12 @@ class Marketplace {
           buyer: json['buyer'] as String?,
           chain: json['chain'] as String?,
           isSold: json['isSold'] as bool?,
-          itemId: json['itemId'] as String?,
+          itemId: json['itemId'] as int?,
           nftAddress: json['nftAddress']! as String,
           price: json['price']! as String,
           seller: json['seller']! as String,
           tokenId: json['tokenId']! as int,
+          marketplaceId: json['marketplaceId'] as String
         );
 
   // Method to convert a Marketplace instance to a JSON object
@@ -46,6 +50,7 @@ class Marketplace {
       'price': price,
       'seller': seller,
       'tokenId': tokenId,
+      'marketplaceId': marketplaceId,
     };
   }
 }

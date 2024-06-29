@@ -1,9 +1,17 @@
+import 'dart:collection';
+
 import 'package:application/core/utils/prefrence_variable.dart';
+import 'package:application/model/marketplace.dart';
+import 'package:application/presentation/wallet_page/screens/no_wallet_page.dart';
 import 'package:application/presentation/wallet_page/widgets/emty_order.dart';
 import 'package:application/presentation/wallet_page/widgets/wallet_balance_stack.dart';
 import 'package:application/presentation/wallet_page/widgets/wallet_detail_section.dart';
+import 'package:application/service/auth_service.dart';
+import 'package:application/service/marketplace_service.dart';
+import 'package:application/service/nft_service.dart';
 import 'package:application/service/wallet_service.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../bnb_screen/bnb_screen.dart';
@@ -26,23 +34,66 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+ List<HashMap<String,dynamic>> ? data;
+  late NFTService nftService;
+  bool isLoading = false;
+  Future<void> getBalanceWallet() async {}
+  late SharedPreferences preferences;
+  late MarketplaceService marketplaceService;
+  String? address;
+  String? addressText;
   @override
   void initState() {
     super.initState();
+    nftService = NFTService();
+    marketplaceService = MarketplaceService();
+     getAddress();
+  }
+  Future<void> getNFTMarketplace() async{
+    try{
+      dynamic dataGet =  await nftService.getNFTByAddress(address!);
+      HashMap<String,dynamic> dataTemp = convertToHashMap(dataGet);
+       this.data = convertToListOfHashMaps(dataTemp["data"]);
+    }
+    catch(e){
+      print('Error: $e');
+    }
+    finally{
+      setState(() {
+        isLoading = true;
+      });
+    }
+  }
+    List<HashMap<String, dynamic>> convertToListOfHashMaps(dynamic input) {
+    if (input is List) {
+      return input.map((item) {
+        if (item is Map<String, dynamic>) {
+          return HashMap<String, dynamic>.from(item);
+        } else {
+          throw Exception('Item is not a Map<String, dynamic>: $item');
+        }
+      }).toList();
+    } else {
+      throw Exception('Input is not a List');
+    }
+  }
+  HashMap<String, dynamic> convertToHashMap(dynamic input) {
+    if (input is Map<String, dynamic>) {
+      return HashMap<String, dynamic>.from(input);
+    } else {
+      throw Exception('Input is not a Map<String, dynamic>');
+    }
   }
 
-  Future<void> getBalanceWallet() async {}
-  late SharedPreferences preferences;
-  String? address;
-  String? addressText;
-  Future<void> getAddress() async {
+  Future<void> getAddress() async{
     preferences = await SharedPreferences.getInstance();
-    address =
-        "truncateWithEllipsis(preferences.getString(PreferenceVariable.WALLET_ADDRESS)!,10)";
+    address =preferences.getString(PreferenceVariable.WALLET_ADDRESS);
+    await getNFTMarketplace();
+
   }
 
-  // var walletStreaming =
-  //     WalletService().getStreamAuctionById(AuthService.user!.uid, 'bsc');
+  var walletStreaming =
+      WalletService().getStreamAuctionById(AuthService.user!.uid, 'bsc');
   String truncateWithEllipsis(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
@@ -55,7 +106,10 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+    child:  
+    !isLoading ? Center(
+                  child: CircularProgressIndicator(),
+                ):Scaffold(
         body: SingleChildScrollView(
           child: FutureBuilder<bool>(future: () async {
             try {
@@ -82,16 +136,18 @@ class _WalletPageState extends State<WalletPage> {
               );
             }
             bool data = snapshot.data!;
-            // if (!data) {
-            //   return NoWalletPage();
-            // }
+            if (!data) {
+              return NoWalletPage();
+            }
             return Container(
               width: double.maxFinite,
               decoration: AppDecoration.fillOnPrimary,
               child: Column(
                 children: [
                   WalletDetailSection(
-                    addressText: address,
+                    addressText: addressText,
+                    walletStreaming: walletStreaming,
+                    address: address,
                   ),
                   SizedBox(height: 20.v),
                   Align(
@@ -110,7 +166,7 @@ class _WalletPageState extends State<WalletPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BnbScreen(),
+                          builder: (context) => BnbScreen(coin: "0.285"),
                         ),
                       );
                     },
@@ -120,6 +176,7 @@ class _WalletPageState extends State<WalletPage> {
                         MaterialPageRoute(builder: (context) => EthScreen()),
                       );
                     },
+                    walletStreaming: walletStreaming,
                   ),
                   SizedBox(height: 35.v),
                   Align(
@@ -147,24 +204,52 @@ class _WalletPageState extends State<WalletPage> {
                               mainAxisSpacing: 15.0,
                               childAspectRatio: 0.85,
                             ),
-                            itemCount: 10,
+                            itemCount: this.data !=null ? this.data!.length: 0,
                             itemBuilder: (BuildContext context, int index) {
                               return OrderItem(
-                                  id: index.toString(),
-                                  imagePath: ImageConstant.imgShoe,
-                                  address: ((index + 1) * 1000).toString(),
-                                  onTap: (id) {
+                                  id: this.data![index]["tokenId"],
+                                  imagePath: this.data![index]["metadata"]!=null ?  this.data![index]["metadata"]["image"] ?? ImageConstant.imageNoImage :  ImageConstant.imageNoImage,
+                                  address: this.data![index]["tokenAddress"],
+                                  addressText: truncateWithEllipsis(this.data![index]["tokenAddress"], 15) ,
+                                  onTap: (id,address,imagePath) {
                                     // Show popup with item details
                                     showDialog(
                                         context: context,
                                         builder: (context) {
                                           return OrderItemSellDialog(
                                             id: id,
-                                            imagePath: ImageConstant.imgShoe,
+                                            imagePath: imagePath,
                                             address:
-                                                ((index + 1) * 1000).toString(),
-                                            onTap: (id) {
+                                                address,
+                                            addressText: truncateWithEllipsis(address, 10),
+                                            onTap: (id,address, price)async {
                                               // Do something
+                                              try{
+                                              Marketplace marketplace = Marketplace(chain: "bsc", isSold: false, nftAddress: address, price: (double.parse(price) * 1e18).toInt().toString(), seller: this.address, tokenId: int.parse(id), marketplaceId: null);
+                                              //print("marketplace ${marketplace1.toJson()}");
+                                             await marketplaceService.MakeAnItemInMarketplace(marketplace);
+                                                              Fluttertoast.showToast(
+                                            msg: "Sell NFT Success",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Color.fromARGB(255, 47, 242, 76),
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                              }
+                                              catch(e){
+                                                print("error: ${e.toString()}");
+                                            Fluttertoast.showToast(
+                                            msg: "failed",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                              }
                                             },
                                           );
                                         });
