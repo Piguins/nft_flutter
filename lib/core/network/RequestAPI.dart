@@ -1,1 +1,1 @@
-const String API_URL = 'http://192.168.1.5:8080';
+const String API_URL = 'http://192.168.2.60:8080'; // chỗ này phải thay theo ip v4, mỗi lần khởi động máy tính có thể nó bị nhảy ip khác

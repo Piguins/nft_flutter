@@ -1,3 +1,4 @@
+import 'package:application/presentation/chatbot/chatbot_screen.dart';
 import 'package:application/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -268,38 +269,43 @@ class AccountPage extends StatelessWidget {
     BuildContext context, {
     required String historyText,
   }) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      CustomIconButton(
-        height: 35.adaptSize,
-        width: 35.adaptSize,
-        padding: EdgeInsets.all(5.h),
-        child: CustomImageView(
-          imagePath: ImageConstant.imgLawSvgrepoCom,
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.only(
-          left: 21.h,
-          top: 6.v,
-          bottom: 5.v,
-        ),
-        child: Text(
-          historyText,
-          style: CustomTextStyles.bodyMedium15.copyWith(
-            color: theme.colorScheme.onPrimaryContainer,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ChatBotScreen(),));
+      },
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        CustomIconButton(
+          height: 35.adaptSize,
+          width: 35.adaptSize,
+          padding: EdgeInsets.all(5.h),
+          child: CustomImageView(
+            imagePath: ImageConstant.imgLawSvgrepoCom,
           ),
         ),
-      ),
-      Spacer(),
-      CustomImageView(
-        imagePath: ImageConstant.imgArrowRight,
-        height: 24.adaptSize,
-        width: 24.adaptSize,
-        margin: EdgeInsets.only(
-          top: 5.v,
-          bottom: 6.v,
+        Padding(
+          padding: EdgeInsets.only(
+            left: 21.h,
+            top: 6.v,
+            bottom: 5.v,
+          ),
+          child: Text(
+            historyText,
+            style: CustomTextStyles.bodyMedium15.copyWith(
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
+          ),
         ),
-      )
-    ]);
+        Spacer(),
+        CustomImageView(
+          imagePath: ImageConstant.imgArrowRight,
+          height: 24.adaptSize,
+          width: 24.adaptSize,
+          margin: EdgeInsets.only(
+            top: 5.v,
+            bottom: 6.v,
+          ),
+        )
+      ]),
+    );
   }
 }

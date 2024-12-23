@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "806810511020-tt5hfd8sr5hrgqajbfbjkibdip2okgam.apps.googleusercontent.com",
+          "client_id": "806810511020-9pfpr1pu4evr8628nqb6ior244cs4rkd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.application.nft_flutter",
-            "certificate_hash": "0022fc1bde5a29900af395c744e17678c34a88a0"
+            "certificate_hash": "c0be8665031df264ef82cf394eff930276ec70bf"
           }
         },
         {
@@ -58,11 +58,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "806810511020-l0l33tje27n2fio4e0vdkn75m26a8n62.apps.googleusercontent.com",
+          "client_id": "806810511020-d5h44km4kedtabsb59j8lrmbqvjjhbn2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.nft_flutter",
-            "certificate_hash": "0022fc1bde5a29900af395c744e17678c34a88a0"
+            "certificate_hash": "c0be8665031df264ef82cf394eff930276ec70bf"
           }
         },
         {
