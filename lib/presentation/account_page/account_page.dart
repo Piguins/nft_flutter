@@ -77,7 +77,7 @@ class AccountPage extends StatelessWidget {
                 ),
                 child: _buildTermOfUseSvgRepo(
                   context,
-                  historyText: "Term of Use",
+                  historyText: "Chat bot",
                 ),
               ),
               SizedBox(height: 25.v),
