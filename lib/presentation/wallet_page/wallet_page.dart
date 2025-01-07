@@ -136,8 +136,11 @@ class _WalletPageState extends State<WalletPage> {
               );
             }
             bool data = snapshot.data!;
+            print("data1111");
+            print(data);
+
             if (!data) {
-              return NoWalletPage();
+              return Center(child: NoWalletPage());
             }
             return Container(
               width: double.maxFinite,

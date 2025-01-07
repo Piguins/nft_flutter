@@ -25,6 +25,9 @@ class WalletService{
     if(AuthService.user!=null)
     {
       var snapshot = await _walletRef.where('accountId', isEqualTo: accountId).limit(1).get();
+      print("snapshot");
+
+      print(snapshot.docs.first);
       if(!snapshot.docs.isEmpty){
         var doc = snapshot.docs.first;
         return doc;
